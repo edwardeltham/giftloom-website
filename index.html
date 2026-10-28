@@ -395,6 +395,152 @@ footer .wrap { padding-block: 64px 40px; display: grid; gap: 48px; }
 .foot-base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 24px; border-top: 1px solid var(--line-dark); font-size: var(--t-xs); letter-spacing: .04em; }
 @media (max-width: 800px) { .foot-grid { grid-template-columns: 1fr 1fr; } .foot-brand { grid-column: 1 / -1; } }
 
+/* ---------- design your box studio ---------- */
+.studio { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(24px, 4vw, 56px); align-items: start; padding-bottom: clamp(64px, 9vw, 128px); }
+.stage-col { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 96px); display: grid; gap: 18px; min-width: 0; }
+.view-toggle { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.seg { display: inline-flex; border: 1px solid var(--line); background: var(--paper); }
+.seg button { font: 400 var(--t-sm)/1 var(--body); padding: .8em 1.2em; border: 0; background: none; color: var(--muted); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--green); color: var(--cream); }
+.stage-hint { font-size: var(--t-xs); color: var(--muted); }
+.stage {
+  position: relative; background:
+    radial-gradient(120% 80% at 50% 0%, #efe8da 0%, #e6dccb 70%, #ddd1bd 100%);
+  padding: clamp(24px, 5vw, 56px); display: grid; place-items: center; min-height: 360px; overflow: hidden;
+}
+.box-wrap { width: 100%; max-width: 640px; perspective: 1600px; }
+.box3d { position: relative; transform-style: preserve-3d; transition: transform .7s cubic-bezier(.3, .7, .2, 1); }
+.box3d.tilt { transform: rotateX(18deg); }
+.box {
+  --mat: #c79f72; --wall: #b48a5d; --fill: #e8dcc6; --ribbon: #b8985a;
+  position: relative; width: 100%; aspect-ratio: var(--ratio, 4 / 3); max-width: 100%;
+  background: var(--mat); padding: clamp(10px, 2.2vw, 18px); border-radius: 4px;
+  box-shadow: 0 30px 50px -22px rgba(31, 51, 40, .45), 0 2px 0 rgba(255, 255, 255, .25) inset, 0 -3px 0 rgba(0, 0, 0, .12) inset;
+}
+.box.kraft { background-color: var(--mat); background-image:
+  radial-gradient(rgba(80, 50, 20, .10) 1px, transparent 1.4px), radial-gradient(rgba(255, 255, 255, .10) 1px, transparent 1.4px);
+  background-size: 5px 5px, 7px 7px; background-position: 0 0, 2px 3px; }
+.box.wood { background-color: var(--mat); background-image:
+  repeating-linear-gradient(92deg, rgba(0, 0, 0, .06) 0 2px, transparent 2px 9px, rgba(255, 255, 255, .05) 9px 11px, transparent 11px 23px),
+  repeating-linear-gradient(88deg, rgba(0, 0, 0, .05) 0 1px, transparent 1px 37px); }
+.box.rigid { background-image: linear-gradient(135deg, rgba(255, 255, 255, .14), transparent 45%, rgba(0, 0, 0, .10)); }
+.tray { position: absolute; inset: clamp(10px, 2.2vw, 18px); background: var(--wall); box-shadow: inset 0 6px 14px rgba(0, 0, 0, .28); border-radius: 2px; display: flex; padding: 6px; }
+.tray > .node { flex: 1; }
+.node { display: flex; min-width: 0; min-height: 0; }
+.node.row { flex-direction: row; }
+.node.col { flex-direction: column; }
+.divider { flex: none; background: var(--wall); position: relative; z-index: 2; touch-action: none; }
+.node.row > .divider { width: 8px; cursor: col-resize; }
+.node.col > .divider { height: 8px; cursor: row-resize; }
+.divider::after { content: ""; position: absolute; inset: 0; box-shadow: 0 0 0 1px rgba(255, 255, 255, .12) inset, 0 3px 5px rgba(0, 0, 0, .25); }
+.divider:hover::before, .divider.dragging::before { content: ""; position: absolute; inset: -4px; background: rgba(184, 152, 90, .35); }
+.comp {
+  position: relative; flex: 1; min-width: 0; min-height: 0; overflow: hidden; cursor: pointer;
+  background-color: var(--fill);
+  background-image:
+    repeating-linear-gradient(28deg, rgba(0, 0, 0, .07) 0 1px, transparent 1px 6px),
+    repeating-linear-gradient(-34deg, rgba(255, 255, 255, .18) 0 1px, transparent 1px 7px),
+    repeating-linear-gradient(80deg, rgba(0, 0, 0, .05) 0 2px, transparent 2px 11px);
+  box-shadow: inset 0 4px 10px rgba(0, 0, 0, .22);
+  display: grid; place-items: center; padding: 9%;
+}
+.comp.sel { outline: 2px dashed var(--gold); outline-offset: -5px; }
+.comp.drop { outline: 2px solid var(--gold); outline-offset: -5px; background-color: color-mix(in srgb, var(--fill) 80%, var(--gold)); }
+.comp img { width: 100%; height: 100%; object-fit: cover; border-radius: 3px; box-shadow: 0 10px 18px -8px rgba(0, 0, 0, .55), 0 0 0 3px rgba(255, 255, 255, .85); pointer-events: none; }
+.comp .empty { font-size: var(--t-xs); color: rgba(31, 42, 36, .55); text-align: center; line-height: 1.4; background: rgba(255, 255, 255, .55); padding: 6px 10px; letter-spacing: .04em; }
+.comp .label { position: absolute; left: 6px; bottom: 6px; right: 6px; font-size: 10px; line-height: 1.2; color: var(--ink); background: rgba(251, 248, 242, .9); padding: 3px 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0; transition: opacity .2s; }
+.comp:hover .label, .comp.sel .label { opacity: 1; }
+.comp-card { position: absolute; z-index: 3; right: 6%; top: 6%; width: 26%; aspect-ratio: 5 / 3.2; background: #fbf8f2; box-shadow: 0 8px 16px -6px rgba(0, 0, 0, .45); transform: rotate(-4deg); display: grid; place-items: center; padding: 6px; pointer-events: none; }
+.comp-card span { font: italic 400 clamp(8px, 1.4vw, 12px)/1.25 var(--display); color: var(--green); text-align: center; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+
+/* lid */
+.lid { position: absolute; inset: 0; border-radius: 4px; overflow: hidden; display: grid; place-items: center; }
+.lid .logo-zone { position: absolute; display: grid; place-items: center; }
+.lid.r-none .logo-zone { inset: 22% 22%; }
+.lid.r-band .logo-zone { left: 34%; right: 10%; top: 22%; bottom: 22%; }
+.lid.r-cross .logo-zone { left: 56%; right: 6%; top: 58%; bottom: 8%; }
+.logo-img { max-width: 100%; max-height: 100%; }
+.foil { width: 100%; height: 100%; -webkit-mask: var(--logo) center / contain no-repeat; mask: var(--logo) center / contain no-repeat; }
+.foil.gold { background: linear-gradient(120deg, #9c7a3c 0%, #e8cf8f 30%, #b8985a 50%, #f1dca2 68%, #8e6d33 100%); }
+.foil.silver { background: linear-gradient(120deg, #8d9295 0%, #eef0f0 32%, #a9adb0 52%, #f7f7f7 70%, #7f8487 100%); }
+.foil.deboss { background: var(--mat); filter: brightness(.78); }
+.foil.white { background: #fbf8f2; }
+.wordmark { font: 400 clamp(14px, 3.4vw, 30px)/1.1 var(--display); letter-spacing: .22em; text-transform: uppercase; text-align: center; -webkit-background-clip: text; background-clip: text; color: transparent; padding: 4px; word-break: break-word; }
+.wordmark.gold { background-image: linear-gradient(120deg, #9c7a3c 0%, #e8cf8f 30%, #b8985a 50%, #f1dca2 68%, #8e6d33 100%); }
+.wordmark.silver { background-image: linear-gradient(120deg, #8d9295, #eef0f0 32%, #a9adb0 52%, #f7f7f7 70%, #7f8487); }
+.wordmark.white { background-image: linear-gradient(#fbf8f2, #fbf8f2); }
+.wordmark.deboss { background-image: linear-gradient(rgba(0, 0, 0, .28), rgba(0, 0, 0, .28)); text-shadow: 0 1px 0 rgba(255, 255, 255, .15); }
+.wordmark.print { background-image: linear-gradient(var(--green), var(--green)); }
+.ribbon-v, .ribbon-h { position: absolute; background: var(--ribbon); box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 2px 6px rgba(0, 0, 0, .25);
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, .22), transparent 30%, transparent 70%, rgba(0, 0, 0, .14)); }
+.ribbon-v { top: 0; bottom: 0; width: 7%; transform: translateX(-50%); }
+.ribbon-h { left: 0; right: 0; height: 7%; transform: translateY(-50%); background-image: linear-gradient(180deg, rgba(255, 255, 255, .22), transparent 30%, transparent 70%, rgba(0, 0, 0, .14)); }
+.bow { position: absolute; width: 24%; transform: translate(-50%, -50%); filter: drop-shadow(0 6px 6px rgba(0, 0, 0, .3)); }
+.tag-card { position: absolute; background: #fbf8f2; padding: 4px 8px; font: italic 400 clamp(8px, 1.3vw, 11px)/1.2 var(--display); color: var(--green); box-shadow: 0 4px 8px rgba(0, 0, 0, .25); transform: rotate(8deg); white-space: nowrap; max-width: 34%; overflow: hidden; text-overflow: ellipsis; }
+
+.stage-foot { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; align-items: center; font-size: var(--t-sm); color: var(--muted); }
+.stage-foot b { font-weight: 500; color: var(--green); }
+
+/* panel */
+.panel { background: var(--paper); border: 1px solid var(--line); min-width: 0; }
+.panel-tabs { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--line); }
+.panel-tabs button { font: 400 var(--t-sm)/1.2 var(--body); background: none; border: 0; border-bottom: 2px solid transparent; padding: 16px 6px 14px; color: var(--muted); cursor: pointer; display: grid; gap: 4px; justify-items: center; }
+.panel-tabs button small { font-size: 10px; letter-spacing: .16em; color: var(--gold-ink); }
+.panel-tabs button[aria-selected="true"] { color: var(--green); border-bottom-color: var(--gold); }
+.panel-body { padding: clamp(18px, 3vw, 28px); display: grid; gap: 26px; }
+.ctl { display: grid; gap: 12px; }
+.ctl > label, .ctl > .lbl { font-size: var(--t-xs); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.ctl p.help { font-size: var(--t-xs); color: var(--muted); margin-top: -4px; }
+.choices { display: flex; flex-wrap: wrap; gap: 8px; }
+.choice { font: 400 var(--t-sm)/1.2 var(--body); padding: .75em 1.1em; border: 1px solid var(--line); background: var(--ivory); color: var(--ink); cursor: pointer; }
+.choice[aria-pressed="true"] { border-color: var(--green); background: var(--green); color: var(--cream); }
+.choice:disabled { opacity: .4; cursor: not-allowed; }
+.swatches { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.sw { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(0, 0, 0, .12); cursor: pointer; position: relative; padding: 0; }
+.sw[aria-pressed="true"]::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 1px solid var(--green); }
+.sw-custom { width: 34px; height: 34px; padding: 0; border: 1px dashed var(--muted); border-radius: 50%; background: none; cursor: pointer; overflow: hidden; }
+.sw-custom::-webkit-color-swatch-wrapper { padding: 0; }
+.sw-custom::-webkit-color-swatch { border: 0; border-radius: 50%; }
+.layouts { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.layout-btn { aspect-ratio: 4 / 3; border: 1px solid var(--line); background: var(--ivory); padding: 5px; cursor: pointer; display: grid; gap: 3px; }
+.layout-btn i { background: #d8ccb6; display: block; }
+.layout-btn[aria-pressed="true"] { border-color: var(--green); box-shadow: 0 0 0 1px var(--green); }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; }
+.tools .choice { padding: .65em 1em; font-size: var(--t-xs); letter-spacing: .04em; }
+.picker-top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+.picker-top select, .picker-top input, .ctl input[type="text"], .ctl textarea, .ctl select {
+  font: 300 var(--t-sm)/1.4 var(--body); color: var(--ink); background: var(--ivory); border: 1px solid var(--line); padding: 10px 12px; width: 100%; min-width: 0; border-radius: 0; }
+.ctl textarea { resize: vertical; min-height: 72px; }
+.picker { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; max-height: 420px; overflow-y: auto; padding-right: 4px; }
+.pick { border: 0; padding: 0; background: none; cursor: grab; text-align: left; display: grid; gap: 5px; font: 300 11px/1.25 var(--body); color: var(--ink); }
+.pick .ph { aspect-ratio: 1; overflow: hidden; background: var(--line); position: relative; }
+.pick img { width: 100%; height: 100%; object-fit: cover; transition: transform .3s; }
+.pick:hover img { transform: scale(1.06); }
+.pick.used .ph::after { content: "In box"; position: absolute; left: 4px; top: 4px; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; background: var(--green); color: var(--cream); padding: 2px 5px; }
+.upload { display: grid; place-items: center; gap: 6px; border: 1px dashed var(--muted); padding: 18px; text-align: center; cursor: pointer; font-size: var(--t-sm); background: var(--ivory); }
+.upload:hover, .upload.over { border-color: var(--gold); background: color-mix(in srgb, var(--ivory) 85%, var(--gold)); }
+.upload small { font-size: var(--t-xs); color: var(--muted); }
+.upload img { max-height: 56px; max-width: 70%; }
+.summary { display: grid; gap: 14px; border-top: 1px solid var(--line); padding: clamp(18px, 3vw, 28px); }
+.summary ol { margin: 0; padding-left: 1.2em; font-size: var(--t-sm); color: var(--muted); columns: 2; column-gap: 24px; }
+.summary .row { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; }
+@media (max-width: 980px) {
+  .studio { grid-template-columns: 1fr; }
+  .stage-col { position: static; }
+  .picker { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .layouts { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 420px) { .summary ol { columns: 1; } .picker-top { grid-template-columns: 1fr; } }
+
+.studio-teaser { display: grid; grid-template-columns: 6fr 5fr; gap: clamp(32px, 6vw, 88px); align-items: center; }
+.studio-teaser .copy { display: grid; gap: 22px; }
+.studio-teaser h2 { font-size: var(--t-2xl); }
+.studio-teaser ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: var(--t-sm); color: var(--cream-muted); }
+.studio-teaser li { display: flex; gap: 12px; align-items: baseline; }
+.studio-teaser li::before { content: ""; width: 18px; height: 1px; background: var(--gold); flex: none; transform: translateY(-4px); }
+.teaser-box { pointer-events: none; }
+@media (max-width: 860px) { .studio-teaser { grid-template-columns: 1fr; } }
+
 /* view switching */
 .view { display: none; }
 .view.active { display: block; animation: rise .5s ease both; }
@@ -524,6 +670,22 @@ footer .wrap { padding-block: 64px 40px; display: grid; gap: 48px; }
           <div class="opt"><h3>A box in your hues</h3><p>Kraft, rigid or wooden, finished to match.</p></div>
           <div class="opt"><h3>Doorstep delivery</h3><p>Gift-ready, sent straight to each recipient.</p></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band on-green">
+    <div class="wrap studio-teaser">
+      <div class="copy">
+        <p class="eyebrow">New · Design your box</p>
+        <h2>See your gift before we make it.</h2>
+        <p class="lede">Our box studio lets you play: choose a box, divide it into compartments, fill it from our collections and put your logo on the lid.</p>
+        <ul><li>Kraft, rigid or wooden, in your brand colours</li><li>Drag walls to make your own compartments</li><li>Upload your logo in gold foil, silver, white or deboss</li><li>Flip between the inside and the lid</li></ul>
+        <div><a class="btn" href="#design">Design your box</a></div>
+      </div>
+      <div class="teaser-box" style="display:grid;gap:18px">
+        <div id="teaser-inside"></div>
+        <div id="teaser-outside" style="width:62%;justify-self:end;margin-top:-22%"></div>
       </div>
     </div>
   </section>
@@ -675,6 +837,46 @@ footer .wrap { padding-block: 64px 40px; display: grid; gap: 48px; }
 </section>
 
 <section class="view" id="view-article"><div class="band"><div class="wrap" id="article"></div></div></section>
+
+<!-- =================== DESIGN YOUR BOX =================== -->
+<section class="view" id="view-design">
+  <div class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">Design your box</p>
+      <h1>Play with your gift before we make it.</h1>
+      <p class="lede">Pick a box, divide it into compartments, fill it from our collections and put your logo on the lid. It is a mood mock-up rather than a scale drawing, and when you like it, send it to us and we'll build the real thing.</p>
+    </div>
+  </div>
+  <div class="wrap studio">
+    <div class="stage-col">
+      <div class="view-toggle">
+        <div class="seg" role="group" aria-label="View">
+          <button type="button" data-act="view" data-val="inside" id="v-inside">Inside</button>
+          <button type="button" data-act="view" data-val="outside" id="v-outside">Outside</button>
+        </div>
+        <span class="stage-hint" id="stage-hint">Tap a compartment, then tap a product. Drag a divider to resize.</span>
+      </div>
+      <div class="stage"><div class="box-wrap"><div class="box3d" id="box3d"></div></div></div>
+      <div class="stage-foot"><span id="stage-count"></span><button class="link" type="button" data-act="reset" style="background:none;border-top:0;border-inline:0;cursor:pointer">Start over</button></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-tabs" role="tablist" aria-label="Design steps">
+        <button role="tab" type="button" data-tab="box" id="t-box"><small>STEP 1</small>Box</button>
+        <button role="tab" type="button" data-tab="layout" id="t-layout"><small>STEP 2</small>Compartments</button>
+        <button role="tab" type="button" data-tab="fill" id="t-fill"><small>STEP 3</small>Products</button>
+        <button role="tab" type="button" data-tab="brand" id="t-brand"><small>STEP 4</small>Branding</button>
+      </div>
+      <div class="panel-body" id="panel-body"></div>
+      <div class="summary">
+        <p class="eyebrow">Your box</p>
+        <ol id="summary-list"></ol>
+        <div class="row"><a class="btn" id="studio-send" href="https://wa.me/918438468217" target="_blank" rel="noopener">Send my design</a><button class="link" type="button" id="studio-copy" style="background:none;border-top:0;border-inline:0;cursor:pointer">Copy summary</button></div>
+        <p class="help" style="font-size:var(--t-xs);color:var(--muted)">Opens WhatsApp with your design written out. We'll ask for your logo file when we reply.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- =================== CONTACT =================== -->
 <section class="view" id="view-contact">
@@ -979,7 +1181,7 @@ function route() {
   document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + view));
   const navKey = view === 'article' ? 'journal' : view;
   document.querySelectorAll('[data-nav]').forEach(a => a.dataset.nav === navKey ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
-  if (view === 'design' && window.Studio) Studio.render();
+  if (view === 'design' && window.giftloomStudio) window.giftloomStudio.render();
   $('#nav').classList.remove('open'); $('#menu-btn').setAttribute('aria-expanded', 'false');
   window.scrollTo(0, 0);
   document.title = view === 'home' ? 'Giftloom Studio' : `${view === 'article' ? 'Journal' : view[0].toUpperCase() + view.slice(1)} · Giftloom Studio`;
@@ -1021,6 +1223,301 @@ $('#enquiry').addEventListener('submit', e => {
 });
 $('#copy-enquiry').addEventListener('click', e => copyText($('#form-text').textContent, e.currentTarget));
 $('#year').textContent = new Date().getFullYear();
+
+// ---------- design your box studio ----------
+const Studio = (() => {
+  const PRODUCTS = CATALOGUES.flatMap(c => c.collections.flatMap(k =>
+    k.items.slice(0, 8).map((name, i) => ({ id: `${k.id}-${i + 1}`, name, col: k.id, colName: k.name, cat: c.id }))));
+  const byId = Object.fromEntries(PRODUCTS.map(p => [p.id, p]));
+  const SIZES = { small: ['Small', '1 / 1'], medium: ['Medium', '4 / 3'], large: ['Large', '16 / 10'] };
+  const MATERIALS = { kraft: 'Kraft', rigid: 'Rigid', wood: 'Wooden' };
+  const WOODS = [['Natural', '#c9a477'], ['Walnut', '#6b4630']];
+  const BOX_COLOURS = [['Forest', '#1f3328'], ['Navy', '#1e2d4a'], ['Ivory', '#ece3d2'], ['Blush', '#dfbdb2'], ['Maroon', '#6b1f2a'], ['Charcoal', '#2f2f2f']];
+  const RIBBONS = [['Gold', '#b8985a'], ['Navy', '#22335a'], ['Forest', '#2f4a3b'], ['Maroon', '#7a2232'], ['Blush', '#e7b9b0'], ['Ivory', '#f4ecdc'], ['Black', '#1b1b1b']];
+  const FILLS = [['Natural shred', '#e3d3b4'], ['Ivory tissue', '#f3ece0'], ['Blush tissue', '#ecd3cb'], ['Sage tissue', '#c9d1bd'], ['Black tissue', '#2b2b2b']];
+  const FINISHES = { gold: 'Gold foil', silver: 'Silver foil', white: 'White print', deboss: 'Debossed', print: 'Full colour' };
+  const RIBBON_STYLES = { band: 'Side band', cross: 'Classic cross', none: 'No ribbon' };
+  const MAX = 9;
+  const KEY = 'giftloom-box-v1';
+
+  let uid = 0;
+  const leaf = item => ({ id: ++uid, t: 'leaf', item: item || null });
+  const split = (dir, r, a, b) => ({ id: ++uid, t: 'split', dir, r, a, b });
+  const LAYOUTS = {
+    one: () => leaf(),
+    two: () => split('row', .5, leaf(), leaf()),
+    three: () => split('row', .56, leaf(), split('col', .5, leaf(), leaf())),
+    four: () => split('col', .5, split('row', .5, leaf(), leaf()), split('row', .5, leaf(), leaf())),
+    five: () => split('row', .4, leaf(), split('col', .5, split('row', .5, leaf(), leaf()), split('row', .5, leaf(), leaf()))),
+    six: () => split('col', .5, split('row', .34, leaf(), split('row', .5, leaf(), leaf())), split('row', .34, leaf(), split('row', .5, leaf(), leaf()))),
+  };
+
+  function defaults() {
+    const root = split('row', .56, leaf('conference-1'), split('col', .5, leaf('conference-5'), leaf('conference-4')));
+    return { size: 'medium', material: 'kraft', boxColour: '#1f3328', wood: '#c9a477', fill: '#e3d3b4', ribbon: '#22335a',
+      ribbonStyle: 'band', finish: 'gold', logo: null, brand: 'Your Brand', card: 'Thank you for being part of our journey.',
+      recipient: 'For Priya', root, sel: root.b.a.id, view: 'inside', tab: 'fill', col: 'conference', q: '' };
+  }
+  let S = load() || defaults();
+
+  // ---- tree helpers
+  const leaves = (n, out = []) => (n.t === 'leaf' ? out.push(n) : (leaves(n.a, out), leaves(n.b, out)), out);
+  function find(id, n = S.root, parent = null) {
+    if (n.id === id) return { n, parent };
+    if (n.t === 'split') return find(id, n.a, n) || find(id, n.b, n);
+    return null;
+  }
+  function replace(target, repl) {
+    const f = find(target.id); if (!f) return;
+    if (!f.parent) S.root = repl; else if (f.parent.a === target) f.parent.a = repl; else f.parent.b = repl;
+  }
+  function maxId(n) { return n.t === 'leaf' ? n.id : Math.max(n.id, maxId(n.a), maxId(n.b)); }
+
+  // ---- persistence (a per-visitor convenience only)
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { try { const { logo, ...rest } = S; localStorage.setItem(KEY, JSON.stringify(rest)); } catch (_) {} } }
+  function load() {
+    try { const s = JSON.parse(localStorage.getItem(KEY)); if (s && s.root) { uid = maxId(s.root); return s; } } catch (e) {}
+    return null;
+  }
+
+  // ---- rendering
+  const matColour = s => s.material === 'kraft' ? '#c49a6c' : s.material === 'wood' ? s.wood : s.boxColour;
+  function nodeHTML(n, s, live) {
+    if (n.t === 'leaf') {
+      const p = n.item && byId[n.item];
+      return `<div class="comp${live && s.sel === n.id ? ' sel' : ''}" data-comp="${n.id}">${p
+        ? `<img src="img/p/${p.id}.webp" alt="${esc(p.name)}"><span class="label">${esc(p.name)}</span>`
+        : (live ? '<span class="empty">Tap to fill</span>' : '')}</div>`;
+    }
+    return `<div class="node ${n.dir}" data-node="${n.id}">
+      <div class="node" style="flex:${n.r} 1 0">${nodeHTML(n.a, s, live)}</div>
+      <div class="divider" data-split="${n.id}" role="separator" aria-label="Drag to resize"></div>
+      <div class="node" style="flex:${1 - n.r} 1 0">${nodeHTML(n.b, s, live)}</div></div>`;
+  }
+  const BOW = c => `<svg class="bow" viewBox="0 0 100 74" aria-hidden="true">
+    <path d="M47 40 L30 72 L38 68 L43 74 L52 42Z" fill="${c}"/><path d="M53 40 L70 72 L62 68 L57 74 L48 42Z" fill="${c}"/>
+    <path d="M50 36 C32 4 4 8 9 30 C13 48 36 46 50 36Z" fill="${c}"/><path d="M50 36 C68 4 96 8 91 30 C87 48 64 46 50 36Z" fill="${c}"/>
+    <path d="M50 36 C38 18 18 16 16 28 C26 24 38 28 50 36Z" fill="#000" opacity=".16"/><path d="M50 36 C62 18 82 16 84 28 C74 24 62 28 50 36Z" fill="#000" opacity=".16"/>
+    <rect x="42" y="28" width="16" height="16" rx="5" fill="${c}"/><rect x="42" y="28" width="16" height="16" rx="5" fill="#fff" opacity=".18"/></svg>`;
+  function markHTML(s) {
+    if (s.logo) return s.finish === 'print' ? `<img class="logo-img" src="${s.logo}" alt="Your logo">` : `<div class="foil ${s.finish}" style="--logo:url('${s.logo}')"></div>`;
+    return `<div class="wordmark ${s.finish}">${esc(s.brand || 'Your Brand')}</div>`;
+  }
+  function boxHTML(s, view, live) {
+    const style = `--ratio:${SIZES[s.size][1]};--mat:${matColour(s)};--fill:${s.fill};--ribbon:${s.ribbon};--wall:color-mix(in srgb, ${matColour(s)} 80%, #000)`;
+    let inner;
+    if (view === 'inside') {
+      inner = `<div class="tray">${nodeHTML(s.root, s, live)}</div>${s.card ? `<div class="comp-card"><span>${esc(s.card)}</span></div>` : ''}`;
+    } else {
+      const r = s.ribbonStyle, rib = [];
+      if (r === 'band') rib.push(`<div class="ribbon-v" style="left:22%"></div>`, BOW(s.ribbon).replace('class="bow"', 'class="bow" style="left:22%;top:50%"'));
+      if (r === 'cross') rib.push(`<div class="ribbon-v" style="left:50%"></div><div class="ribbon-h" style="top:50%"></div>`, BOW(s.ribbon).replace('class="bow"', 'class="bow" style="left:50%;top:50%"'));
+      const tag = s.recipient ? `<span class="tag-card" style="${r === 'cross' ? 'left:60%;top:30%' : r === 'band' ? 'left:27%;top:64%' : 'left:62%;top:76%'}">${esc(s.recipient)}</span>` : '';
+      inner = `<div class="lid r-${r}"><div class="logo-zone">${markHTML(s)}</div>${rib.join('')}${tag}</div>`;
+    }
+    return `<div class="box ${s.material}" style="${style}">${inner}</div>`;
+  }
+
+  const pressed = b => `aria-pressed="${!!b}"`;
+  const sw = (list, cur, act) => list.map(([n, c]) => `<button type="button" class="sw" style="background:${c}" title="${n}" aria-label="${n}" data-act="${act}" data-val="${c}" ${pressed(cur === c)}></button>`).join('');
+  function miniLayout(n) {
+    if (n.t === 'leaf') return '<i style="flex:1"></i>';
+    return `<span style="display:flex;flex-direction:${n.dir === 'row' ? 'row' : 'column'};gap:3px;flex:1">
+      <span style="display:flex;flex:${n.r} 1 0">${miniLayout(n.a)}</span><span style="display:flex;flex:${1 - n.r} 1 0">${miniLayout(n.b)}</span></span>`;
+  }
+  function panelHTML() {
+    const t = S.tab, count = leaves(S.root).length;
+    if (t === 'box') return `
+      <div class="ctl"><span class="lbl">Size</span><div class="choices">${Object.entries(SIZES).map(([k, [n]]) => `<button type="button" class="choice" data-act="size" data-val="${k}" ${pressed(S.size === k)}>${n}</button>`).join('')}</div></div>
+      <div class="ctl"><span class="lbl">Material</span><div class="choices">${Object.entries(MATERIALS).map(([k, n]) => `<button type="button" class="choice" data-act="material" data-val="${k}" ${pressed(S.material === k)}>${n}</button>`).join('')}</div></div>
+      ${S.material === 'rigid' ? `<div class="ctl"><span class="lbl">Box colour</span><div class="swatches">${sw(BOX_COLOURS, S.boxColour, 'boxColour')}<input class="sw-custom" type="color" id="c-box" value="${S.boxColour}" aria-label="Custom box colour" title="Match your brand colour"></div><p class="help">Use the last circle to match your exact brand colour.</p></div>` : ''}
+      ${S.material === 'wood' ? `<div class="ctl"><span class="lbl">Wood tone</span><div class="choices">${WOODS.map(([n, c]) => `<button type="button" class="choice" data-act="wood" data-val="${c}" ${pressed(S.wood === c)}>${n}</button>`).join('')}</div></div>` : ''}
+      ${S.material === 'kraft' ? `<p class="help" style="font-size:var(--t-sm);color:var(--muted)">Kraft keeps its natural brown. Choose Rigid to set your own box colour.</p>` : ''}
+      <div class="ctl"><span class="lbl">Filling</span><div class="swatches">${sw(FILLS, S.fill, 'fill')}</div></div>`;
+    if (t === 'layout') return `
+      <div class="ctl"><span class="lbl">Start from a layout</span><div class="layouts">${Object.entries(LAYOUTS).map(([k, f]) => `<button type="button" class="layout-btn" data-act="layout" data-val="${k}" aria-label="${k} compartments" style="display:flex">${miniLayout(f())}</button>`).join('')}</div>
+        <p class="help">Products already in your box are kept and moved into the new layout.</p></div>
+      <div class="ctl"><span class="lbl">Selected compartment</span><div class="tools">
+        <button type="button" class="choice" data-act="split" data-val="row" ${count >= MAX ? 'disabled' : ''}>Split side by side</button>
+        <button type="button" class="choice" data-act="split" data-val="col" ${count >= MAX ? 'disabled' : ''}>Split top and bottom</button>
+        <button type="button" class="choice" data-act="remove" ${count <= 1 ? 'disabled' : ''}>Remove compartment</button>
+        <button type="button" class="choice" data-act="empty">Empty it</button></div>
+        <p class="help">Tap a compartment in the box to select it. Drag the walls between compartments to resize them. Up to ${MAX} compartments.</p></div>`;
+    if (t === 'fill') {
+      const used = new Set(leaves(S.root).map(l => l.item));
+      const q = S.q.trim().toLowerCase();
+      const list = PRODUCTS.filter(p => q ? (p.name + ' ' + p.colName).toLowerCase().includes(q) : p.col === S.col);
+      return `<div class="ctl"><span class="lbl">Add products</span>
+        <div class="picker-top"><select id="s-col" aria-label="Collection">${CATALOGUES.map(c => `<optgroup label="${esc(c.short)}">${c.collections.map(k => `<option value="${k.id}" ${S.col === k.id ? 'selected' : ''}>${esc(k.name)}</option>`).join('')}</optgroup>`).join('')}</select>
+        <input id="s-q" type="search" placeholder="Search all products" value="${esc(S.q)}" aria-label="Search products"></div>
+        <p class="help">Tap a product to place it in the selected compartment, or drag it onto any compartment.</p>
+        <div class="picker" id="picker">${list.map(p => `<button type="button" class="pick${used.has(p.id) ? ' used' : ''}" draggable="true" data-pick="${p.id}"><span class="ph"><img src="img/p/${p.id}.webp" alt="" loading="lazy"></span>${esc(p.name)}</button>`).join('') || '<p class="help">No products match that search.</p>'}</div></div>`;
+    }
+    return `
+      <div class="ctl"><span class="lbl">Your logo</span>
+        <label class="upload" id="drop-logo" for="f-logo">${S.logo ? `<img src="${S.logo}" alt="Your uploaded logo"><small>Tap to replace</small>` : `<span>Upload your logo</span><small>PNG, SVG or JPG. A transparent PNG looks best.</small>`}</label>
+        <input type="file" id="f-logo" accept="image/png,image/svg+xml,image/jpeg,image/webp" hidden>
+        ${S.logo ? `<button type="button" class="link" data-act="clearLogo" style="justify-self:start;background:none;border-top:0;border-inline:0;cursor:pointer">Remove logo</button>` : `<input type="text" id="s-brand" value="${esc(S.brand)}" aria-label="Brand name" placeholder="Or type your brand name"><p class="help">No logo handy? We'll set your name in our serif until you upload one.</p>`}</div>
+      <div class="ctl"><span class="lbl">Logo finish</span><div class="choices">${Object.entries(FINISHES).map(([k, n]) => `<button type="button" class="choice" data-act="finish" data-val="${k}" ${pressed(S.finish === k)}>${n}</button>`).join('')}</div></div>
+      <div class="ctl"><span class="lbl">Ribbon</span><div class="choices">${Object.entries(RIBBON_STYLES).map(([k, n]) => `<button type="button" class="choice" data-act="ribbonStyle" data-val="${k}" ${pressed(S.ribbonStyle === k)}>${n}</button>`).join('')}</div>
+        ${S.ribbonStyle !== 'none' ? `<div class="swatches">${sw(RIBBONS, S.ribbon, 'ribbon')}<input class="sw-custom" type="color" id="c-ribbon" value="${S.ribbon}" aria-label="Custom ribbon colour"></div>` : ''}</div>
+      <div class="ctl"><label for="s-recipient">Gift tag</label><input type="text" id="s-recipient" value="${esc(S.recipient)}" maxlength="28" placeholder="e.g. For Priya"></div>
+      <div class="ctl"><label for="s-card">Message card inside</label><textarea id="s-card" maxlength="120" placeholder="A note from you to each recipient">${esc(S.card)}</textarea></div>`;
+  }
+
+  function summaryLines() {
+    const items = leaves(S.root).map(l => l.item && byId[l.item]?.name).filter(Boolean);
+    const mat = S.material === 'rigid' ? `Rigid box in ${nameOf(BOX_COLOURS, S.boxColour) || S.boxColour}` : S.material === 'wood' ? `Wooden box (${nameOf(WOODS, S.wood)})` : 'Kraft box';
+    return { items, spec: [
+      `${SIZES[S.size][0]} ${mat.toLowerCase().replace(/^./, c => c.toUpperCase())}, ${leaves(S.root).length} compartments, ${nameOf(FILLS, S.fill)?.toLowerCase()}`,
+      `${S.logo ? 'Logo' : `"${S.brand}"`} in ${FINISHES[S.finish].toLowerCase()} on the lid`,
+      S.ribbonStyle === 'none' ? 'No ribbon' : `${RIBBON_STYLES[S.ribbonStyle]} ribbon in ${nameOf(RIBBONS, S.ribbon) || S.ribbon}`,
+      S.recipient ? `Gift tag: ${S.recipient}` : '', S.card ? `Card: "${S.card}"` : ''].filter(Boolean) };
+  }
+  const nameOf = (list, c) => (list.find(x => x[1] === c) || [])[0];
+
+  function render() {
+    const root = document.getElementById('view-design'); if (!root) return;
+    $('#box3d').innerHTML = boxHTML(S, S.view, true);
+    $('#v-inside').setAttribute('aria-pressed', S.view === 'inside'); $('#v-outside').setAttribute('aria-pressed', S.view === 'outside');
+    $('#stage-hint').textContent = S.view === 'inside' ? 'Tap a compartment, then tap a product. Drag a wall to resize.' : 'The lid, as your recipients first see it.';
+    root.querySelectorAll('[data-tab]').forEach(b => b.setAttribute('aria-selected', b.dataset.tab === S.tab));
+    $('#panel-body').innerHTML = panelHTML();
+    const n = leaves(S.root), filled = n.filter(l => l.item).length;
+    $('#stage-count').innerHTML = `<b>${filled} of ${n.length}</b> compartments filled`;
+    const { items, spec } = summaryLines();
+    $('#summary-list').innerHTML = [...spec, ...items.map(i => `Item: ${i}`)].map(l => `<li>${esc(l)}</li>`).join('');
+    $('#studio-send').href = 'https://wa.me/918438468217?text=' + encodeURIComponent(summaryText());
+    save();
+  }
+  function renderStage() { $('#box3d').innerHTML = boxHTML(S, S.view, true); const n = leaves(S.root); $('#stage-count').innerHTML = `<b>${n.filter(l => l.item).length} of ${n.length}</b> compartments filled`; save(); }
+  function summaryText() {
+    const { items, spec } = summaryLines();
+    return ['Hello Giftloom Studio, I designed a box on your website.', '', ...spec, '', 'Inside:', ...items.map(i => `- ${i}`), '', S.logo ? 'I will send my logo file.' : ''].join('\n').trim();
+  }
+  function flip(to) {
+    if (S.view === to) return;
+    S.view = to; const el = $('#box3d');
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return render();
+    el.animate([{ transform: 'rotateX(0)' }, { transform: 'rotateX(80deg)' }], { duration: 220, easing: 'ease-in' }).onfinish = () => {
+      render(); el.animate([{ transform: 'rotateX(-80deg)' }, { transform: 'rotateX(0)' }], { duration: 320, easing: 'cubic-bezier(.2,.8,.2,1)' });
+    };
+  }
+
+  function place(pid, compId) {
+    const target = compId ? find(compId)?.n : (find(S.sel)?.n?.t === 'leaf' ? find(S.sel).n : null) || leaves(S.root).find(l => !l.item) || leaves(S.root)[0];
+    if (!target) return;
+    target.item = pid;
+    const next = leaves(S.root).find(l => !l.item);
+    S.sel = next ? next.id : target.id;
+    if (S.view !== 'inside') S.view = 'inside';
+    render();
+  }
+
+  function onLogo(file) {
+    if (!file || !file.type.startsWith('image/')) return;
+    const fr = new FileReader();
+    fr.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const w = img.naturalWidth || 600, h = img.naturalHeight || 300, k = Math.min(1, 700 / Math.max(w, h));
+        const cv = document.createElement('canvas'); cv.width = Math.max(1, Math.round(w * k)); cv.height = Math.max(1, Math.round(h * k));
+        const cx = cv.getContext('2d'); cx.drawImage(img, 0, 0, cv.width, cv.height);
+        try {
+          const d = cx.getImageData(0, 0, cv.width, cv.height), px = d.data;
+          const corner = [0, (cv.width - 1) * 4, (cv.height - 1) * cv.width * 4, (cv.width * cv.height - 1) * 4];
+          const opaqueLight = corner.every(i => px[i + 3] > 250 && px[i] + px[i + 1] + px[i + 2] > 600);
+          if (opaqueLight) { // turn a white background transparent so foil and deboss finishes work
+            for (let i = 0; i < px.length; i += 4) { const lum = .299 * px[i] + .587 * px[i + 1] + .114 * px[i + 2]; px[i + 3] = Math.max(0, Math.min(255, (255 - lum) * 2.2)); }
+            cx.putImageData(d, 0, 0);
+          }
+          S.logo = cv.toDataURL('image/png');
+        } catch (e) { S.logo = fr.result; }
+        render();
+      };
+      img.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  }
+
+  function bind() {
+    const root = document.getElementById('view-design');
+    root.addEventListener('click', e => {
+      const tab = e.target.closest('[data-tab]'); if (tab) { S.tab = tab.dataset.tab; return render(); }
+      const pick = e.target.closest('[data-pick]'); if (pick) return place(pick.dataset.pick);
+      const comp = e.target.closest('[data-comp]');
+      if (comp) { S.sel = +comp.dataset.comp; if (S.tab === 'box' || S.tab === 'brand') S.tab = 'fill'; return render(); }
+      const b = e.target.closest('[data-act]'); if (!b || b.disabled) return;
+      const v = b.dataset.val, act = b.dataset.act;
+      if (act === 'view') return flip(v);
+      if (act === 'reset') { S = defaults(); return render(); }
+      if (act === 'layout') {
+        const items = leaves(S.root).map(l => l.item).filter(Boolean);
+        S.root = LAYOUTS[v](); leaves(S.root).forEach((l, i) => l.item = items[i] || null);
+        S.sel = (leaves(S.root).find(l => !l.item) || leaves(S.root)[0]).id; S.view = 'inside'; return render();
+      }
+      if (act === 'split' || act === 'remove' || act === 'empty') {
+        const f = find(S.sel); if (!f || f.n.t !== 'leaf') return;
+        if (act === 'empty') f.n.item = null;
+        if (act === 'split' && leaves(S.root).length < MAX) { const nl = leaf(); replace(f.n, split(v, .5, f.n, nl)); S.sel = nl.id; }
+        if (act === 'remove' && f.parent) { const sib = f.parent.a === f.n ? f.parent.b : f.parent.a; replace(f.parent, sib); S.sel = leaves(sib)[0].id; }
+        S.view = 'inside'; return render();
+      }
+      if (act === 'clearLogo') { S.logo = null; return render(); }
+      if (['size', 'material', 'wood', 'boxColour', 'fill', 'ribbon', 'ribbonStyle', 'finish'].includes(act)) {
+        S[act] = v;
+        if (act === 'ribbonStyle' || act === 'finish' || act === 'ribbon') S.view = 'outside';
+        return render();
+      }
+    });
+    root.addEventListener('input', e => {
+      const id = e.target.id;
+      if (id === 's-q') { S.q = e.target.value; const pos = e.target.selectionStart; render(); const q = $('#s-q'); q.focus(); q.setSelectionRange(pos, pos); }
+      if (id === 's-brand') { S.brand = e.target.value; S.view = 'outside'; renderStage(); }
+      if (id === 's-recipient') { S.recipient = e.target.value; S.view = 'outside'; renderStage(); }
+      if (id === 's-card') { S.card = e.target.value; S.view = 'inside'; renderStage(); }
+      if (id === 'c-box') { S.boxColour = e.target.value; renderStage(); }
+      if (id === 'c-ribbon') { S.ribbon = e.target.value; S.view = 'outside'; renderStage(); }
+    });
+    root.addEventListener('change', e => {
+      if (e.target.id === 's-col') { S.col = e.target.value; S.q = ''; render(); }
+      if (e.target.id === 'f-logo') onLogo(e.target.files[0]);
+      if (['s-brand', 's-recipient', 's-card', 'c-box', 'c-ribbon'].includes(e.target.id)) render();
+    });
+    // drag products onto compartments; drop a logo file on the upload zone
+    root.addEventListener('dragstart', e => { const p = e.target.closest('[data-pick]'); if (p) e.dataTransfer.setData('text/plain', p.dataset.pick); });
+    root.addEventListener('dragover', e => {
+      const c = e.target.closest('[data-comp]'), u = e.target.closest('#drop-logo');
+      if (c || u) { e.preventDefault(); root.querySelectorAll('.drop,.over').forEach(x => x.classList.remove('drop', 'over')); (c || u).classList.add(c ? 'drop' : 'over'); }
+    });
+    root.addEventListener('dragleave', e => { const c = e.target.closest('[data-comp],#drop-logo'); if (c && !c.contains(e.relatedTarget)) c.classList.remove('drop', 'over'); });
+    root.addEventListener('drop', e => {
+      const c = e.target.closest('[data-comp]'), u = e.target.closest('#drop-logo');
+      if (u && e.dataTransfer.files[0]) { e.preventDefault(); return onLogo(e.dataTransfer.files[0]); }
+      if (c) { e.preventDefault(); const pid = e.dataTransfer.getData('text/plain'); if (byId[pid]) place(pid, +c.dataset.comp); }
+    });
+    // drag a wall to resize compartments
+    root.addEventListener('pointerdown', e => {
+      const d = e.target.closest('.divider'); if (!d) return;
+      e.preventDefault(); const node = find(+d.dataset.split).n, box = d.parentElement, [a, , b] = box.children;
+      const rect = box.getBoundingClientRect(); d.classList.add('dragging'); d.setPointerCapture(e.pointerId);
+      const move = ev => {
+        const r = node.dir === 'row' ? (ev.clientX - rect.left) / rect.width : (ev.clientY - rect.top) / rect.height;
+        node.r = Math.round(Math.min(.82, Math.max(.18, r)) * 100) / 100; a.style.flex = `${node.r} 1 0`; b.style.flex = `${1 - node.r} 1 0`;
+      };
+      const up = () => { d.removeEventListener('pointermove', move); d.removeEventListener('pointerup', up); d.classList.remove('dragging'); save(); };
+      d.addEventListener('pointermove', move); d.addEventListener('pointerup', up);
+    });
+    $('#studio-copy').addEventListener('click', e => copyText(summaryText(), e.currentTarget));
+  }
+  bind();
+  return { render, boxHTML, preview: () => defaults() };
+})();
+window.giftloomStudio = Studio;
+if (location.hash === '#design') Studio.render();
+const teaserState = Studio.preview();
+$('#teaser-inside').innerHTML = Studio.boxHTML(teaserState, 'inside', false);
+$('#teaser-outside').innerHTML = Studio.boxHTML({ ...teaserState, ribbonStyle: 'cross', ribbon: '#b8985a', material: 'rigid', boxColour: '#1e2d4a' }, 'outside', false);
 </script>
 </body>
 </html>
