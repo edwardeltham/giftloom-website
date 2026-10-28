@@ -1,0 +1,1026 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta charset="utf-8">
+<title>Giftloom Studio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Giftloom Studio weaves customised corporate gifts for companies, conferences, hotels, schools and celebrations. Curated with an artist's eye, every box handled with care.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Poppins:ital,wght@0,300;0,400;0,500;1,300&display=swap">
+<style>
+/* Layout: the catalogue's own language. Deep loom-green bands alternate with ivory paper,
+   one gold thread runs through as rules and labels, and photography does the selling. */
+:root {
+  --green: #1f3328;      /* brand forest green, sampled from the catalogue covers */
+  --green-2: #2a4236;    /* raised surface on green */
+  --ivory: #f5f1e8;      /* catalogue paper */
+  --paper: #fbf8f2;      /* lighter paper for cards */
+  --gold: #b8985a;       /* logo gold, for rules and marks */
+  --gold-ink: #8a6a32;   /* gold dark enough to read as text on ivory */
+  --ink: #1f2a24;        /* body text, a green-biased near-black */
+  --muted: #5f6b63;      /* secondary text on ivory */
+  --cream: #f7f2e9;      /* text on green */
+  --cream-muted: #c9c7b8;
+  --line: #dcd5c6;       /* hairlines on ivory */
+  --line-dark: #3b5246;  /* hairlines on green */
+
+  --display: "Lora", "Iowan Old Style", Georgia, serif;
+  --body: "Poppins", "Helvetica Neue", Arial, sans-serif;
+
+  --t-xs: .75rem; --t-sm: .875rem; --t-md: 1rem; --t-lg: 1.25rem;
+  --t-xl: clamp(1.6rem, 1.2rem + 1.6vw, 2.25rem);
+  --t-2xl: clamp(2.1rem, 1.4rem + 3vw, 3.5rem);
+  --t-3xl: clamp(2.6rem, 1.6rem + 4.4vw, 4.6rem);
+
+  --wrap: 1200px;
+  --gutter-l: max(20px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(20px, env(safe-area-inset-right, 0px));
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
+body {
+  margin: 0; background: var(--ivory); color: var(--ink);
+  font-family: var(--body); font-weight: 300; font-size: var(--t-md); line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--ivory); }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+h1, h2, h3, h4 { font-family: var(--display); font-weight: 400; line-height: 1.15; margin: 0; text-wrap: balance; letter-spacing: -.005em; }
+p { margin: 0; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+.wrap { max-width: var(--wrap); margin: 0 auto; padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
+.band { padding-block: clamp(64px, 9vw, 128px); }
+.band.tight { padding-block: clamp(48px, 6vw, 80px); }
+.on-green { background: var(--green); color: var(--cream); }
+.on-paper { background: var(--paper); }
+
+.eyebrow {
+  font-family: var(--body); font-size: var(--t-xs); font-weight: 500; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--gold-ink); margin: 0;
+}
+.on-green .eyebrow { color: var(--gold); }
+.thread { width: 56px; height: 1px; background: var(--gold); border: 0; margin: 0; }
+.lede { font-size: var(--t-lg); line-height: 1.6; color: var(--muted); max-width: 34em; }
+.on-green .lede { color: var(--cream-muted); }
+.italic { font-family: var(--display); font-style: italic; }
+
+.btn {
+  display: inline-flex; align-items: center; gap: .6em; padding: .95em 1.6em;
+  font: 400 var(--t-sm)/1 var(--body); letter-spacing: .08em; text-transform: uppercase;
+  text-decoration: none; border: 1px solid var(--green); background: var(--green); color: var(--cream);
+  cursor: pointer; transition: background .25s, color .25s, border-color .25s;
+}
+.btn:hover { background: transparent; color: var(--green); }
+.btn.ghost { background: transparent; color: var(--green); }
+.btn.ghost:hover { background: var(--green); color: var(--cream); }
+.on-green .btn { background: var(--gold); border-color: var(--gold); color: var(--green); }
+.on-green .btn:hover { background: transparent; color: var(--gold); }
+.on-green .btn.ghost { background: transparent; color: var(--cream); border-color: var(--cream-muted); }
+.on-green .btn.ghost:hover { border-color: var(--cream); background: var(--cream); color: var(--green); }
+.link {
+  font-size: var(--t-sm); letter-spacing: .08em; text-transform: uppercase; text-decoration: none;
+  border-bottom: 1px solid var(--gold); padding-bottom: 3px; color: var(--green); white-space: nowrap;
+}
+.on-green .link { color: var(--cream); }
+.link:hover { color: var(--gold-ink); }
+.on-green .link:hover { color: var(--gold); }
+
+/* ---------- header ---------- */
+.site-header {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: color-mix(in srgb, var(--ivory) 94%, transparent);
+  backdrop-filter: saturate(1.2) blur(10px); -webkit-backdrop-filter: saturate(1.2) blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 76px; }
+.brand { display: flex; align-items: center; gap: 14px; text-decoration: none; color: var(--green); }
+.brand svg { width: 34px; height: 34px; flex: none; }
+.brand-word { display: grid; line-height: 1; }
+.brand-word b { font: 400 1.22rem/1 var(--display); letter-spacing: .28em; }
+.brand-word small { font: 400 .58rem/1 var(--body); letter-spacing: .5em; margin-top: 6px; color: var(--gold-ink); }
+.nav { display: flex; align-items: center; gap: clamp(18px, 2.4vw, 36px); }
+.nav a { font-size: var(--t-sm); text-decoration: none; letter-spacing: .04em; color: var(--ink); padding-block: 6px; border-bottom: 1px solid transparent; }
+.nav a:hover, .nav a[aria-current="page"] { border-bottom-color: var(--gold); }
+.nav .btn { padding: .8em 1.3em; color: var(--cream); border-bottom: 1px solid var(--green); }
+.nav .btn:hover { color: var(--green); }
+.menu-btn { display: none; background: none; border: 1px solid var(--line); width: 44px; height: 44px; cursor: pointer; color: var(--green); }
+.menu-btn span { display: block; width: 18px; height: 1px; background: currentColor; margin: 5px auto; }
+@media (max-width: 1020px) {
+  .menu-btn { display: block; }
+  .nav { position: absolute; left: 0; right: 0; top: 76px; flex-direction: column; align-items: stretch; gap: 0;
+         background: var(--ivory); border-bottom: 1px solid var(--line); padding: 8px var(--gutter-r) 20px var(--gutter-l); display: none; }
+  .nav.open { display: flex; }
+  .nav a { padding-block: 14px; border-bottom: 1px solid var(--line); }
+  .nav .btn { margin-top: 16px; justify-content: center; }
+}
+
+/* ---------- hero ---------- */
+.hero { background: var(--green); color: var(--cream); }
+.hero-grid { display: grid; grid-template-columns: 1.05fr 1fr; min-height: min(78vh, 720px); }
+.hero-copy { display: flex; flex-direction: column; justify-content: center; gap: 28px;
+  padding-block: clamp(56px, 8vw, 110px); padding-left: max(var(--gutter-l), calc((100vw - var(--wrap)) / 2 + 20px)); padding-right: clamp(24px, 5vw, 72px); }
+.hero h1 { font-size: var(--t-3xl); }
+.hero h1 em { color: var(--gold); font-style: italic; }
+.hero .lede { color: var(--cream-muted); }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; }
+.hero-media { position: relative; overflow: hidden; }
+.hero-media img { width: 100%; height: 100%; object-fit: cover; }
+.hero-note { position: absolute; left: 24px; bottom: 24px; right: 24px; max-width: 300px; background: var(--paper); color: var(--ink); padding: 18px 20px; font-size: var(--t-sm); line-height: 1.55; }
+.hero-note b { display: block; font: 400 var(--t-md)/1.3 var(--display); margin-bottom: 4px; color: var(--green); }
+@media (max-width: 880px) {
+  .hero-grid { grid-template-columns: 1fr; min-height: 0; }
+  .hero-copy { padding-left: var(--gutter-l); padding-right: var(--gutter-r); }
+  .hero-media { aspect-ratio: 4 / 3; }
+}
+
+.sectors { border-bottom: 1px solid var(--line); }
+.sectors .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 28px; padding-block: 22px; font-size: var(--t-sm); color: var(--muted); }
+.sectors b { font-weight: 500; letter-spacing: .2em; text-transform: uppercase; font-size: var(--t-xs); color: var(--gold-ink); }
+.sectors ul { display: flex; flex-wrap: wrap; gap: 6px 24px; list-style: none; margin: 0; padding: 0; }
+
+/* ---------- shared section heads ---------- */
+.head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px 64px; align-items: end; margin-bottom: clamp(40px, 5vw, 64px); }
+.head > div { display: grid; gap: 18px; }
+.head h2 { font-size: var(--t-2xl); }
+.head p { color: var(--muted); max-width: 32em; }
+.on-green .head p { color: var(--cream-muted); }
+@media (max-width: 760px) { .head { grid-template-columns: 1fr; } }
+
+/* ---------- care at scale ---------- */
+.care { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: center; }
+.care-media { position: relative; }
+.care-media img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.care-media img + img { position: absolute; width: 46%; right: -6%; bottom: -8%; aspect-ratio: 1; border: 10px solid var(--ivory); }
+.care-copy { display: grid; gap: 24px; }
+.care-copy h2 { font-size: var(--t-2xl); }
+.care-list { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--line); }
+.care-list li { display: grid; grid-template-columns: 9rem 1fr; gap: 16px; padding-block: 16px; border-bottom: 1px solid var(--line); font-size: var(--t-sm); color: var(--muted); }
+.care-list li b { font: 400 var(--t-md)/1.4 var(--display); color: var(--green); }
+@media (max-width: 860px) { .care { grid-template-columns: 1fr; } .care-media img + img { right: 0; } .care-list li { grid-template-columns: 1fr; gap: 2px; } }
+
+/* ---------- occasions ---------- */
+.occasions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line-dark); }
+.occasion { padding: 32px 28px 36px 0; border-bottom: 1px solid var(--line-dark); display: grid; gap: 10px; align-content: start; }
+.occasion:not(:nth-child(3n+1)) { padding-left: 28px; border-left: 1px solid var(--line-dark); }
+.occasion h3 { font-size: var(--t-lg); }
+.occasion p { font-size: var(--t-sm); color: var(--cream-muted); }
+@media (max-width: 860px) {
+  .occasions { grid-template-columns: 1fr 1fr; }
+  .occasion:not(:nth-child(3n+1)) { padding-left: 0; border-left: 0; }
+  .occasion:nth-child(even) { padding-left: 24px; border-left: 1px solid var(--line-dark); }
+}
+@media (max-width: 520px) { .occasions { grid-template-columns: 1fr; } .occasion:nth-child(even) { padding-left: 0; border-left: 0; } }
+
+/* ---------- catalogue cards ---------- */
+.cat-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.cat-card { text-decoration: none; display: grid; gap: 16px; align-content: start; }
+.cat-card .ph { overflow: hidden; aspect-ratio: 3 / 4; background: var(--line); }
+.cat-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.2, .7, .2, 1); }
+.cat-card:hover img { transform: scale(1.04); }
+.cat-card h3 { font-size: var(--t-lg); }
+.cat-card p { font-size: var(--t-sm); color: var(--muted); }
+.cat-card .meta { font-size: var(--t-xs); letter-spacing: .14em; text-transform: uppercase; color: var(--gold-ink); }
+@media (max-width: 980px) { .cat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .cat-grid { grid-template-columns: 1fr; } }
+
+/* ---------- make it yours ---------- */
+.yours { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(32px, 6vw, 88px); align-items: start; }
+.yours-media img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.yours-copy { display: grid; gap: 22px; }
+.yours-copy h2 { font-size: var(--t-2xl); }
+.opts { display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px; margin-top: 12px; }
+.opt { padding-block: 22px; border-top: 1px solid var(--line); display: grid; gap: 6px; }
+.opt h3 { font-size: var(--t-lg); }
+.opt p { font-size: var(--t-sm); color: var(--muted); }
+@media (max-width: 860px) { .yours { grid-template-columns: 1fr; } .yours-media img { aspect-ratio: 16 / 10; } }
+@media (max-width: 520px) { .opts { grid-template-columns: 1fr; } }
+
+/* ---------- process ---------- */
+.steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px; counter-reset: step; }
+.step { display: grid; gap: 14px; align-content: start; }
+.step .ph { aspect-ratio: 1; overflow: hidden; background: var(--green-2); }
+.step img { width: 100%; height: 100%; object-fit: cover; }
+.step .n { font: 400 var(--t-xl)/1 var(--display); color: var(--gold); }
+.step h3 { font-size: var(--t-lg); }
+.step small { display: block; font-size: var(--t-xs); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin-top: -6px; }
+.step p { font-size: var(--t-sm); color: var(--cream-muted); }
+.lead-time { margin-top: 48px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: baseline; padding-top: 28px; border-top: 1px solid var(--line-dark); }
+.lead-time b { font: 400 var(--t-xl)/1.2 var(--display); }
+.lead-time span { color: var(--cream-muted); font-size: var(--t-sm); }
+@media (max-width: 980px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 20px; } .step:last-child { grid-column: 1 / -1; } .step:last-child .ph { aspect-ratio: 2 / 1; } }
+
+/* ---------- hampers ---------- */
+.hampers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 32px; }
+.hamper { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: center; }
+.hamper .ph { aspect-ratio: 1; overflow: hidden; background: var(--line); }
+.hamper img { width: 100%; height: 100%; object-fit: cover; }
+.hamper-copy { display: grid; gap: 10px; align-content: center; }
+.hamper .from { font-size: var(--t-xs); letter-spacing: .14em; text-transform: uppercase; color: var(--gold-ink); }
+.hamper .price { font: 400 var(--t-lg)/1 var(--display); color: var(--green); font-variant-numeric: tabular-nums; }
+.hamper h3 { font-size: var(--t-xl); }
+.hamper ul { list-style: none; margin: 4px 0 0; padding: 0; font-size: var(--t-sm); color: var(--muted); display: grid; gap: 2px; }
+.hamper .tag { font-size: var(--t-xs); color: var(--muted); }
+@media (max-width: 900px) { .hampers { grid-template-columns: 1fr; } }
+@media (max-width: 460px) { .hamper { grid-template-columns: 1fr; } }
+
+/* ---------- stat ---------- */
+.stat { display: grid; grid-template-columns: auto 1fr; gap: clamp(24px, 6vw, 80px); align-items: center; }
+.stat .big { font: 400 clamp(5rem, 3rem + 9vw, 10rem)/.9 var(--display); color: var(--gold); letter-spacing: -.02em; }
+.stat h2 { font-size: var(--t-2xl); margin-bottom: 14px; }
+.stat p { color: var(--cream-muted); max-width: 30em; }
+.stat cite { display: block; margin-top: 18px; font-style: normal; font-size: var(--t-xs); color: var(--cream-muted); opacity: .8; }
+@media (max-width: 700px) { .stat { grid-template-columns: 1fr; } }
+
+/* ---------- founder ---------- */
+.founder-teaser { display: grid; grid-template-columns: 4fr 6fr; gap: clamp(32px, 6vw, 96px); align-items: center; }
+.founder-teaser img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; }
+.founder-teaser blockquote { margin: 0; font: italic 400 var(--t-2xl)/1.25 var(--display); color: var(--green); }
+.founder-teaser .copy { display: grid; gap: 26px; }
+.sig { display: grid; gap: 2px; }
+.sig b { font: 400 var(--t-lg)/1.2 var(--display); }
+.sig span { font-size: var(--t-sm); color: var(--muted); }
+@media (max-width: 760px) { .founder-teaser { grid-template-columns: 1fr; } }
+
+/* ---------- journal ---------- */
+.posts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 28px; }
+.post-card { text-decoration: none; display: grid; gap: 14px; align-content: start; }
+.post-card .ph { aspect-ratio: 4 / 3; overflow: hidden; background: var(--line); }
+.post-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.2, .7, .2, 1); }
+.post-card:hover img { transform: scale(1.04); }
+.post-card .kind { font-size: var(--t-xs); letter-spacing: .16em; text-transform: uppercase; color: var(--gold-ink); display: flex; gap: 12px; }
+.post-card .kind span { color: var(--muted); letter-spacing: .06em; text-transform: none; }
+.post-card h3 { font-size: var(--t-xl); }
+.post-card p { font-size: var(--t-sm); color: var(--muted); }
+.post-card.feature { grid-column: 1 / -1; grid-template-columns: 7fr 5fr; gap: 40px; align-items: center; }
+.post-card.feature .ph { aspect-ratio: 16 / 10; }
+.post-card.feature h3 { font-size: var(--t-2xl); }
+.post-card.feature .txt { display: grid; gap: 16px; }
+.post-card .txt { display: grid; gap: 10px; }
+@media (max-width: 900px) { .posts { grid-template-columns: repeat(2, minmax(0, 1fr)); } .post-card.feature { grid-template-columns: 1fr; gap: 18px; } }
+@media (max-width: 560px) { .posts { grid-template-columns: 1fr; } }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px; }
+.chip { font: 400 var(--t-sm)/1 var(--body); padding: .7em 1.2em; border: 1px solid var(--line); background: transparent; color: var(--ink); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--green); color: var(--cream); border-color: var(--green); }
+
+/* article */
+.article-hero { display: grid; gap: 22px; max-width: 760px; margin: 0 auto; text-align: center; justify-items: center; }
+.article-hero h1 { font-size: var(--t-3xl); }
+.article-cover { margin-top: 48px; }
+.article-cover img { width: 100%; aspect-ratio: 16 / 8; object-fit: cover; }
+.prose { max-width: 680px; margin: 56px auto 0; display: grid; gap: 22px; font-size: 1.0625rem; }
+.prose h2 { font-size: var(--t-xl); margin-top: 18px; }
+.prose ul { margin: 0; padding-left: 1.1em; display: grid; gap: 6px; }
+.prose li::marker { color: var(--gold); }
+.prose .pull { font: italic 400 var(--t-xl)/1.35 var(--display); color: var(--green); border-left: 1px solid var(--gold); padding-left: 24px; margin-block: 12px; }
+.prose figure { margin: 12px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.prose figure img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+.prose figure.three { grid-template-columns: repeat(3, 1fr); }
+.prose dl { display: grid; grid-template-columns: 9rem 1fr; gap: 10px 20px; margin: 0; padding-block: 18px; border-block: 1px solid var(--line); font-size: var(--t-sm); }
+.prose dt { color: var(--gold-ink); letter-spacing: .12em; text-transform: uppercase; font-size: var(--t-xs); padding-top: 3px; }
+.prose dd { margin: 0; }
+@media (max-width: 520px) { .prose dl { grid-template-columns: 1fr; gap: 2px; } .prose dd { margin-bottom: 10px; } }
+.article-foot .link { white-space: normal; }
+.article-foot { max-width: 680px; margin: 56px auto 0; padding-top: 28px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; align-items: center; }
+
+/* ---------- page heads ---------- */
+.page-head { padding-block: clamp(56px, 8vw, 112px) clamp(40px, 5vw, 64px); }
+.page-head .wrap { display: grid; gap: 22px; }
+.page-head h1 { font-size: var(--t-3xl); max-width: 14em; }
+.page-head .lede { max-width: 36em; }
+
+/* ---------- collections page ---------- */
+.subnav { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 76px); z-index: 40; background: var(--ivory); border-block: 1px solid var(--line); }
+.subnav .wrap { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.subnav .wrap::-webkit-scrollbar { display: none; }
+.subnav button { flex: none; background: none; border: 0; border-bottom: 2px solid transparent; padding: 18px 16px 16px; font: 400 var(--t-sm)/1.2 var(--body); color: var(--muted); cursor: pointer; white-space: nowrap; }
+.subnav button:first-child { padding-left: 0; }
+.subnav button[aria-selected="true"] { color: var(--green); border-bottom-color: var(--gold); }
+.cat-intro { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(32px, 5vw, 80px); align-items: center; }
+.cat-intro img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.cat-intro .copy { display: grid; gap: 18px; }
+.cat-intro h2 { font-size: var(--t-2xl); }
+.toc { list-style: none; margin: 8px 0 0; padding: 0; border-top: 1px solid var(--line); font-size: var(--t-sm); }
+.toc a { display: flex; justify-content: space-between; gap: 16px; padding-block: 12px; border-bottom: 1px solid var(--line); text-decoration: none; }
+.toc a span { color: var(--muted); }
+.toc a:hover { color: var(--gold-ink); }
+@media (max-width: 860px) { .cat-intro { grid-template-columns: 1fr; } }
+.collection { padding-block: clamp(48px, 6vw, 88px); border-top: 1px solid var(--line); scroll-margin-top: 150px; }
+.collection-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 12px 32px; margin-bottom: 32px; }
+.collection-head h3 { font-size: var(--t-xl); }
+.collection-head .italic { color: var(--muted); font-size: var(--t-lg); }
+.products { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px 20px; list-style: none; margin: 0; padding: 0; }
+.products li { display: grid; gap: 10px; }
+.products .ph { aspect-ratio: 4 / 5; overflow: hidden; background: var(--line); }
+.products img { width: 100%; height: 100%; object-fit: cover; }
+.products span { font-size: var(--t-sm); }
+@media (max-width: 860px) { .products { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.also { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: baseline; font-size: var(--t-sm); color: var(--muted); }
+.also b { font-weight: 500; font-size: var(--t-xs); letter-spacing: .16em; text-transform: uppercase; color: var(--gold-ink); margin-right: 6px; }
+.also span:not(:last-child)::after { content: " ·"; color: var(--gold); }
+.custom-note { font-size: var(--t-sm); color: var(--muted); display: flex; gap: 12px; align-items: center; }
+.custom-note::before { content: ""; width: 28px; height: 1px; background: var(--gold); }
+
+/* ---------- founder page ---------- */
+.founder-hero { display: grid; grid-template-columns: 5fr 6fr; gap: clamp(32px, 6vw, 96px); align-items: center; }
+.founder-hero img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 18%; }
+.founder-hero .copy { display: grid; gap: 24px; }
+.founder-hero h1 { font-size: var(--t-3xl); }
+.founder-body { display: grid; grid-template-columns: 4fr 7fr; gap: clamp(32px, 6vw, 96px); }
+.founder-body aside { display: grid; gap: 14px; align-content: start; position: sticky; top: 120px; }
+.founder-body aside h2 { font-size: var(--t-xl); }
+.founder-body .prose { margin: 0; max-width: none; }
+.values { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line-dark); }
+.value { padding: 28px 20px 8px 0; display: grid; gap: 8px; align-content: start; }
+.value + .value { padding-left: 20px; border-left: 1px solid var(--line-dark); }
+.value h3 { font-size: var(--t-lg); }
+.value p { font-size: var(--t-sm); color: var(--cream-muted); }
+@media (max-width: 900px) {
+  .founder-hero, .founder-body { grid-template-columns: 1fr; }
+  .founder-body aside { position: static; }
+  .values { grid-template-columns: 1fr 1fr; }
+  .value + .value { padding-left: 0; border-left: 0; }
+  .value { border-bottom: 1px solid var(--line-dark); padding-bottom: 24px; }
+}
+@media (max-width: 480px) { .values { grid-template-columns: 1fr; } }
+
+/* ---------- contact ---------- */
+.contact { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(32px, 6vw, 96px); align-items: start; }
+.contact-info { display: grid; gap: 28px; }
+.contact-info h2 { font-size: var(--t-2xl); }
+.contact-lines { display: grid; gap: 0; border-top: 1px solid var(--line-dark); }
+.contact-lines div { display: grid; gap: 4px; padding-block: 18px; border-bottom: 1px solid var(--line-dark); }
+.contact-lines small { font-size: var(--t-xs); letter-spacing: .16em; text-transform: uppercase; color: var(--gold); }
+.contact-lines .v { font: 400 var(--t-lg)/1.3 var(--display); display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; user-select: all; }
+.copy-btn { user-select: none; font: 400 var(--t-xs)/1 var(--body); letter-spacing: .1em; text-transform: uppercase; background: none; border: 0; border-bottom: 1px solid var(--gold); color: var(--cream-muted); padding: 2px 0; cursor: pointer; }
+form.enquiry { background: var(--paper); color: var(--ink); padding: clamp(24px, 4vw, 48px); display: grid; grid-template-columns: 1fr 1fr; gap: 22px 20px; }
+form.enquiry .full { grid-column: 1 / -1; }
+form.enquiry h3 { font-size: var(--t-xl); color: var(--green); }
+.field { display: grid; gap: 8px; min-width: 0; }
+.field label { font-size: var(--t-xs); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+.field input, .field select, .field textarea {
+  font: 300 var(--t-md)/1.4 var(--body); color: var(--ink); background: transparent;
+  border: 0; border-bottom: 1px solid var(--line); padding: 8px 0 10px; border-radius: 0; width: 100%;
+}
+.field textarea { resize: vertical; min-height: 96px; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-bottom-color: var(--gold); }
+.form-foot { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; justify-content: space-between; }
+.form-foot p { font-size: var(--t-xs); color: var(--muted); max-width: 26em; }
+.form-result { background: var(--ivory); border-left: 1px solid var(--gold); padding: 18px 20px; display: grid; gap: 12px; font-size: var(--t-sm); }
+.form-result pre { white-space: pre-wrap; font: 300 var(--t-sm)/1.6 var(--body); margin: 0; color: var(--muted); }
+.form-result .row { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; }
+@media (max-width: 860px) { .contact { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { form.enquiry { grid-template-columns: 1fr; } }
+
+/* ---------- cta + footer ---------- */
+.cta { text-align: center; display: grid; gap: 24px; justify-items: center; }
+.cta h2 { font-size: var(--t-3xl); max-width: 14em; }
+.cta .lede { margin: 0 auto; }
+footer { background: var(--green); color: var(--cream-muted); border-top: 1px solid var(--line-dark); }
+footer .wrap { padding-block: 64px 40px; display: grid; gap: 48px; }
+.foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 32px; }
+.foot-grid h4 { font: 500 var(--t-xs)/1 var(--body); letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+.foot-grid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: var(--t-sm); }
+.foot-grid a { text-decoration: none; }
+.foot-grid a:hover { color: var(--cream); }
+.foot-brand { display: grid; gap: 20px; align-content: start; max-width: 22rem; }
+.foot-brand .brand { color: var(--cream); }
+.foot-brand .brand small { color: var(--gold); }
+.foot-brand p { font-size: var(--t-sm); }
+.foot-base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 24px; border-top: 1px solid var(--line-dark); font-size: var(--t-xs); letter-spacing: .04em; }
+@media (max-width: 800px) { .foot-grid { grid-template-columns: 1fr 1fr; } .foot-brand { grid-column: 1 / -1; } }
+
+/* view switching */
+.view { display: none; }
+.view.active { display: block; animation: rise .5s ease both; }
+@keyframes rise { from { opacity: .4; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <!-- The Giftloom mark: two warp threads (currentColor) and two gold weft threads, woven over and under. -->
+  <symbol id="mark" viewBox="0 0 266 266">
+    <rect x="73" y="0" width="10" height="178" fill="currentColor"/><rect x="73" y="198" width="10" height="68" fill="currentColor"/>
+    <rect x="182" y="0" width="10" height="68" fill="currentColor"/><rect x="182" y="88" width="10" height="178" fill="currentColor"/>
+    <rect x="0" y="72" width="68" height="10" fill="#b8985a"/><rect x="88" y="72" width="178" height="10" fill="#b8985a"/>
+    <rect x="0" y="182" width="178" height="10" fill="#b8985a"/><rect x="198" y="182" width="68" height="10" fill="#b8985a"/>
+  </symbol>
+</svg>
+
+<a class="visually-hidden" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#home" aria-label="Giftloom Studio, home">
+      <svg><use href="#mark"/></svg>
+      <span class="brand-word"><b>GIFTLOOM</b><small>STUDIO</small></span>
+    </a>
+    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav" aria-label="Menu"><span></span><span></span><span></span></button>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#collections" data-nav="collections">Collections</a>
+      <a href="#hampers" data-nav="hampers">Hampers</a>
+      <a href="#design" data-nav="design">Design your box</a>
+      <a href="#founder" data-nav="founder">Founder</a>
+      <a href="#journal" data-nav="journal">Journal</a>
+      <a class="btn" href="#contact" data-nav="contact">Plan a gift</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- =================== HOME =================== -->
+<section class="view" id="view-home">
+  <div class="hero on-green">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">Corporate gifting studio</p>
+        <h1>Gifts that say <em>we noticed you.</em></h1>
+        <p class="lede">Giftloom Studio designs customised gifts for companies, conferences, hotels, schools and celebrations. We work in volume, and every single box is still packed by hand, with love and the utmost care.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#contact">Plan a gift</a>
+          <a class="link" href="#collections">Explore the collections</a>
+        </div>
+      </div>
+      <div class="hero-media">
+        <img src="img/x/cover-calendar.webp" alt="A red gift box with a branded 2027 desk calendar, mulled tea and cocoa tins" fetchpriority="high">
+        <div class="hero-note"><b>Ready in 7 to 10 working days</b>From your confirmed order to your recipients' doors, gift-ready.</div>
+      </div>
+    </div>
+  </div>
+  <div class="sectors">
+    <div class="wrap">
+      <b>Woven for</b>
+      <ul><li>IT</li><li>Banking</li><li>Real estate</li><li>Healthcare</li><li>Hospitality</li><li>Schools</li><li>Event planners</li></ul>
+    </div>
+  </div>
+
+  <section class="band">
+    <div class="wrap care">
+      <div class="care-media">
+        <img src="img/x/stacked-boxes.webp" alt="Rows of ivory gift boxes tied with satin ribbon and dried flowers" loading="lazy">
+        <img src="img/x/curating.webp" alt="Hands arranging items inside a hamper" loading="lazy">
+      </div>
+      <div class="care-copy">
+        <p class="eyebrow">Our way of working</p>
+        <h2>Gifting at scale. Care at the size of one.</h2>
+        <p class="lede">Big orders usually mean shortcuts. Ours don't. Every box is assembled, checked, ribboned and carded by hand, so the last recipient on the list opens exactly the same gift as the first.</p>
+        <ul class="care-list">
+          <li><b>An artist's eye</b>Every colour, texture and combination is chosen to feel just right.</li>
+          <li><b>Branding with manners</b>Your logo arrives gracefully through foil, ribbon and card. It never shouts.</li>
+          <li><b>Quality you can feel</b>Honest materials and a careful finish you notice the moment you unwrap.</li>
+          <li><b>Right to their door</b>Sent to your office or straight to each recipient's home, gift-ready.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band on-green">
+    <div class="wrap">
+      <div class="head">
+        <div><p class="eyebrow">What we do</p><h2>Every occasion has a story. We gift it.</h2></div>
+        <p>From a single client thank-you to a full conference of delegates, we design the gift around the people receiving it.</p>
+      </div>
+      <div class="occasions">
+        <div class="occasion"><h3>Corporate gifting</h3><p>Gifts that say "we noticed you", for clients, teams and festive seasons.</p></div>
+        <div class="occasion"><h3>Conferences &amp; launches</h3><p>Delegate kits, speaker thank-yous and launch-day hampers that make an event memorable.</p></div>
+        <div class="occasion"><h3>Hotels, resorts &amp; spas</h3><p>Little luxuries that make a stay unforgettable, under your own label.</p></div>
+        <div class="occasion"><h3>Hospitals &amp; newborn kits</h3><p>Soft beginnings for new mothers and their little ones.</p></div>
+        <div class="occasion"><h3>Schools &amp; institutions</h3><p>Thank-yous for teachers, staff and star achievers.</p></div>
+        <div class="occasion"><h3>Events &amp; celebrations</h3><p>Weddings, naming ceremonies, housewarmings and baby showers, wrapped in joy.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="head">
+        <div><p class="eyebrow">The collections</p><h2>Four catalogues, nineteen collections.</h2></div>
+        <p>Over three hundred pieces to build from, every one of them customisable with your brand, colours and message.</p>
+      </div>
+      <div class="cat-grid" id="home-cats"></div>
+    </div>
+  </section>
+
+  <section class="band on-paper">
+    <div class="wrap yours">
+      <div class="yours-media"><img src="img/x/navy-boxes.webp" alt="Kraft gift boxes tied with navy ribbon and handwritten tags" loading="lazy"></div>
+      <div class="yours-copy">
+        <p class="eyebrow">Make it yours</p>
+        <h2>Unmistakably yours, quietly premium.</h2>
+        <p class="lede">Your brand belongs on the gift, but it should feel like a signature, not an advertisement.</p>
+        <div class="opts">
+          <div class="opt"><h3>Your mark in gold</h3><p>Foil-stamped on the lid, quietly premium.</p></div>
+          <div class="opt"><h3>Ribbon in your colours</h3><p>Woven to match your brand palette.</p></div>
+          <div class="opt"><h3>A card with a name</h3><p>A message from you, addressed to each recipient.</p></div>
+          <div class="opt"><h3>Subtle on keepsakes</h3><p>Your logo on select items, never on everything.</p></div>
+          <div class="opt"><h3>A box in your hues</h3><p>Kraft, rigid or wooden, finished to match.</p></div>
+          <div class="opt"><h3>Doorstep delivery</h3><p>Gift-ready, sent straight to each recipient.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band on-green" id="process">
+    <div class="wrap">
+      <div class="head">
+        <div><p class="eyebrow">How we work</p><h2>Five threads, one beautiful gift.</h2></div>
+        <p>We begin with the story, not the product. Here is how a brief becomes a box in your recipients' hands.</p>
+      </div>
+      <div class="steps" id="steps"></div>
+      <div class="lead-time"><b>7 to 10 working days</b><span>Typical lead time from your confirmed order. Never rushed, never late.</span></div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="head">
+        <div><p class="eyebrow">Signature hampers</p><h2>Ready-made inspiration, one from every catalogue.</h2></div>
+        <p>Start from a finished idea and we will tailor it to your brief, budget and brand. <a class="link" href="#hampers">See all sixteen</a></p>
+      </div>
+      <div class="hampers" id="home-hampers"></div>
+    </div>
+  </section>
+
+  <section class="band tight on-green">
+    <div class="wrap stat">
+      <div class="big">62%</div>
+      <div>
+        <h2>Make it personal. People remember.</h2>
+        <p>Of Americans surveyed, 62% prefer a personalised, heartfelt gift over a generic, store-bought one. A thoughtful gift keeps working long after the box is opened.</p>
+        <cite>Source: Vistaprint / OnePoll survey of 2,000 Americans, November 2019.</cite>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap founder-teaser">
+      <img src="img/x/founder.webp" alt="Dharanya Sundar, founder of Giftloom Studio, in a yellow saree among green leaves" loading="lazy">
+      <div class="copy">
+        <p class="eyebrow">The founder</p>
+        <blockquote>"We would rather craft a moment than sell a hamper."</blockquote>
+        <div class="sig"><b>Dharanya Sundar</b><span>Founder, Giftloom Studio. Costume Design graduate with an artist's eye and a lifelong love of crafts.</span></div>
+        <div><a class="link" href="#founder">Meet Dharanya</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band on-paper">
+    <div class="wrap">
+      <div class="head">
+        <div><p class="eyebrow">Journal</p><h2>Our work, up close.</h2></div>
+        <p>Inside our hampers, how we brand with restraint, and what happens between your brief and your doorstep. <a class="link" href="#journal">Read the journal</a></p>
+      </div>
+      <div class="posts" id="home-posts"></div>
+    </div>
+  </section>
+
+  <section class="band on-green">
+    <div class="wrap cta">
+      <p class="eyebrow">Your story. Our thread.</p>
+      <h2>Tell us the occasion. We'll weave the gift.</h2>
+      <p class="lede">Share the people, the feeling and the numbers. We'll come back with a curated proposal for your budget.</p>
+      <div class="hero-actions" style="justify-content:center"><a class="btn" href="#contact">Plan a gift</a><a class="btn ghost" href="https://wa.me/918438468217" target="_blank" rel="noopener">WhatsApp +91 84384 68217</a></div>
+    </div>
+  </section>
+</section>
+
+<!-- =================== COLLECTIONS =================== -->
+<section class="view" id="view-collections">
+  <div class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">Collections</p>
+      <h1>Everything we weave, from desk to doorstep.</h1>
+      <p class="lede">Browse by catalogue. Every item can be customised with your brand, colours and message, and combined into a hamper at any budget from ₹499.</p>
+    </div>
+  </div>
+  <div class="subnav" role="tablist" aria-label="Catalogues"><div class="wrap" id="cat-tabs"></div></div>
+  <div class="wrap" id="cat-panel"></div>
+</section>
+
+<!-- =================== HAMPERS =================== -->
+<section class="view" id="view-hampers">
+  <div class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">Sample hampers</p>
+      <h1>Sixteen starting points, from ₹499 to ₹4,999.</h1>
+      <p class="lede">Each hamper is a finished idea you can order as it is, or reshape around your recipients. Prices are per hamper and change with your choice of items, branding and quantity.</p>
+    </div>
+  </div>
+  <div class="wrap" id="all-hampers"></div>
+  <section class="band on-green"><div class="wrap cta"><h2>Want something only you could give?</h2><p class="lede">Every hamper can be rebuilt from our nineteen collections around your brief.</p><a class="btn" href="#contact">Start a custom hamper</a></div></section>
+</section>
+
+<!-- =================== FOUNDER =================== -->
+<section class="view" id="view-founder">
+  <section class="band">
+    <div class="wrap founder-hero">
+      <img src="img/x/founder.webp" alt="Dharanya Sundar, founder of Giftloom Studio" loading="lazy">
+      <div class="copy">
+        <p class="eyebrow">The founder</p>
+        <h1>Dharanya Sundar</h1>
+        <hr class="thread">
+        <p class="lede">A Costume Design graduate with a natural artist's eye and a lifelong love of crafts, curating and design. Dharanya founded Giftloom Studio on a simple belief: a gift should not end when the box is opened.</p>
+        <p class="italic" style="font-size:var(--t-xl);line-height:1.35;color:var(--green)">"It should linger, like a fragrance, a texture, a small smile."</p>
+      </div>
+    </div>
+  </section>
+  <section class="band on-paper">
+    <div class="wrap founder-body">
+      <aside><p class="eyebrow">Her story</p><h2>From costume design to the craft of gifting.</h2></aside>
+      <div class="prose">
+        <p>Costume design is the discipline of telling a story through fabric, colour and detail, and of making every piece feel right for the person who wears it. Dharanya brings the same instinct to gifting. She starts with the people who will open the box, and only then chooses what goes inside.</p>
+        <p>That is why Giftloom Studio begins every project with a conversation about the occasion, the people and the feeling, rather than a product list. Colours are matched, textures are balanced and branding is placed with restraint, so a corporate gift feels personal instead of promotional.</p>
+        <p class="pull">We would rather craft a moment than sell a hamper.</p>
+        <p>As the studio has grown to serve companies, conferences, hotels, hospitals and schools, one rule has not changed. Orders may come in hundreds, but each box is still handled one at a time: arranged by hand, checked, ribboned, carded and packed with care before it leaves the studio.</p>
+        <p>Today Giftloom Studio curates four catalogues and nineteen collections, from leather desk accessories and branded calendars to Tamil Nadu sweets, artisan heritage keepsakes, spa amenities and newborn kits, and weaves them into gifts that people keep.</p>
+      </div>
+    </div>
+  </section>
+  <section class="band on-green">
+    <div class="wrap">
+      <div class="head"><div><p class="eyebrow">What she holds the studio to</p><h2>Our promise, stitched in.</h2></div><p>Five commitments that shape every gift, whatever the size of the order.</p></div>
+      <div class="values">
+        <div class="value"><h3>An artist's eye</h3><p>Every colour, texture and combination is chosen to feel just right.</p></div>
+        <div class="value"><h3>Branding with manners</h3><p>Your logo arrives gracefully through foil, ribbon and card, never shouting.</p></div>
+        <div class="value"><h3>Quality you can feel</h3><p>Honest materials and a careful finish you notice the moment you unwrap.</p></div>
+        <div class="value"><h3>Time kept</h3><p>Typically ready in 7 to 10 working days from your order.</p></div>
+        <div class="value"><h3>Right to their door</h3><p>Sent straight to your recipients' homes or your office, gift-ready.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="band"><div class="wrap cta"><p class="eyebrow">Work with Dharanya</p><h2>Begin with a conversation.</h2><p class="lede">Tell us about the occasion and the people. We'll take it from there.</p><a class="btn" href="#contact">Plan a gift</a></div></section>
+</section>
+
+<!-- =================== JOURNAL =================== -->
+<section class="view" id="view-journal">
+  <div class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">Journal</p>
+      <h1>Our work, our process, our craft.</h1>
+      <p class="lede">Case studies and stories from the studio: what goes into our gifts, why, and how they reach your people.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding-bottom:clamp(64px,9vw,128px)">
+    <div class="filters" id="filters" role="group" aria-label="Filter stories"></div>
+    <div class="posts" id="all-posts"></div>
+  </div>
+</section>
+
+<section class="view" id="view-article"><div class="band"><div class="wrap" id="article"></div></div></section>
+
+<!-- =================== CONTACT =================== -->
+<section class="view" id="view-contact">
+  <section class="band on-green">
+    <div class="wrap contact">
+      <div class="contact-info">
+        <p class="eyebrow">Plan a gift</p>
+        <h2>Tell us the occasion, the people and the feeling.</h2>
+        <p class="lede">We'll settle budget, numbers and brand colours together, then curate a proposal for you. Most orders are ready 7 to 10 working days after confirmation.</p>
+        <div class="contact-lines">
+          <div><small>Call or WhatsApp</small><span class="v"><span id="phone-text">+91 84384 68217</span><button class="copy-btn" type="button" data-copy="+91 84384 68217">Copy</button></span></div>
+          <div><small>Instagram</small><span class="v"><a href="https://www.instagram.com/giftloomstudio/" target="_blank" rel="noopener">@giftloomstudio</a></span></div>
+          <div><small>Founder</small><span class="v">Dharanya Sundar</span></div>
+        </div>
+      </div>
+      <form class="enquiry" id="enquiry" novalidate>
+        <h3 class="full">Gifting enquiry</h3>
+        <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="f-company">Company</label><input id="f-company" name="company" autocomplete="organization"></div>
+        <div class="field"><label for="f-occasion">Occasion</label>
+          <select id="f-occasion" name="occasion">
+            <option>Corporate gifting</option><option>Conference or launch</option><option>Festive season</option><option>Hotel, resort or spa</option>
+            <option>School or institution</option><option>Hospital or newborn kits</option><option>Wedding or celebration</option><option>Something else</option>
+          </select></div>
+        <div class="field"><label for="f-qty">Number of gifts</label><input id="f-qty" name="qty" inputmode="numeric" placeholder="e.g. 150"></div>
+        <div class="field"><label for="f-budget">Budget per gift</label>
+          <select id="f-budget" name="budget"><option>₹499 to ₹999</option><option>₹1,000 to ₹1,999</option><option>₹2,000 to ₹2,999</option><option>₹3,000 to ₹4,999</option><option>₹5,000 and above</option><option>Not sure yet</option></select></div>
+        <div class="field"><label for="f-date">Needed by</label><input id="f-date" name="date" type="date"></div>
+        <div class="field full"><label for="f-msg">Tell us more</label><textarea id="f-msg" name="msg" placeholder="Who are the recipients? Any colours, items or feelings you have in mind?"></textarea></div>
+        <div class="form-foot full">
+          <p>We'll prepare your enquiry as a message you can send us on WhatsApp.</p>
+          <button class="btn" type="submit">Prepare my enquiry</button>
+        </div>
+        <div class="form-result full" id="form-result" hidden>
+          <b style="font-weight:500">Your enquiry is ready to send.</b>
+          <pre id="form-text"></pre>
+          <div class="row"><a class="btn" id="wa-link" href="https://wa.me/918438468217" target="_blank" rel="noopener">Open WhatsApp</a><button class="link" type="button" id="copy-enquiry" style="background:none;border-top:0;border-inline:0;cursor:pointer">Copy message</button></div>
+        </div>
+      </form>
+    </div>
+  </section>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#home"><svg><use href="#mark"/></svg><span class="brand-word"><b>GIFTLOOM</b><small>STUDIO</small></span></a>
+        <p>Thoughtfully woven gifts for corporates, conferences, hospitals, hotels, schools and celebrations. Curated with an artist's eye and wrapped in care.</p>
+      </div>
+      <div><h4>Collections</h4><ul id="foot-cats"></ul></div>
+      <div><h4>Studio</h4><ul><li><a href="#hampers">Sample hampers</a></li><li><a href="#design">Design your box</a></li><li><a href="#founder">Founder</a></li><li><a href="#journal">Journal</a></li><li><a href="#contact">Plan a gift</a></li></ul></div>
+      <div><h4>Contact</h4><ul><li>+91 84384 68217</li><li><a href="https://www.instagram.com/giftloomstudio/" target="_blank" rel="noopener">@giftloomstudio</a></li><li><a href="https://wa.me/918438468217" target="_blank" rel="noopener">WhatsApp us</a></li></ul></div>
+    </div>
+    <div class="foot-base"><span>© <span id="year">2026</span> Giftloom Studio</span><span>Your story. Our thread. A gift they will keep.</span></div>
+  </div>
+</footer>
+
+<script>
+const CATALOGUES = [
+  { id: 'corporate', name: 'Corporate, Conferences & Launches', short: 'Corporate & Conferences', cover: 'cover-corporate',
+    intro: 'Delegate kits, desk pieces, leather accessories, tech and stationery for clients, teams and events.',
+    collections: [
+      { id: 'conference', name: 'Conference & Launch Kits', tag: 'Make every delegate feel remembered',
+        items: ['Customised calendar','Scented calendar','Thank you card','Coffee mug','Premium notebook','Premium pen','Cotton tote bag','Tea coaster set','Metallic bookmark','Desk clock','Power bank','Speaker gift box','Delegate welcome kit','Launch-day hamper','Brass memento','Mysore pak box'] },
+      { id: 'tabletop', name: 'Office Tabletop', tag: 'Small pieces that make a desk feel like home',
+        items: ['Pen stand','Desk organiser','Wooden organiser','Laptop stand','Mobile stand','Key holder tray','Name plate','Sticky note holder','Mini bonsai','Succulent','Paperweight','Business-card holder','Leather passport cover','Premium water bottle','Key chain','Leather catch tray'] },
+      { id: 'accessories', name: 'Premium Corporate Accessories', tag: 'Polish for the professional, packed in pride',
+        items: ['Leather AirPods sleeve','Leather note sleeve','Leather wallet','Laptop sleeve','Travel organiser','Tech organiser','Executive pen set','Cufflinks','Pocket square','Key organiser','Premium umbrella','Travel bottle set','Stainless-steel flask','Premium thermos','Insulated tumbler','Sunglasses case'] },
+      { id: 'tech', name: 'Gadgets & Tech', tag: 'Smart little gifts for everyday magic',
+        items: ['TWS earbuds','Bluetooth speaker','Smartwatch','Power bank','Wireless charging pad','Night lamp','USB hub','USB drive','Multi charging cable','Car charger','Travel adapter','Digital alarm clock','Mini desk fan','Smart tracker','Reading light','Rechargeable lamp'] },
+      { id: 'stationery', name: 'Stationery & Calendars', tag: 'For plans, ideas and handwritten thoughts',
+        items: ['Premium notebook','Leather notebook','Handmade paper notebook','Executive diary','Journal','Planner','Fountain pen','Pen set','Customised calendar','Stamp kit','Desk calendar','Handmade bookmark','Metallic bookmark','Habit tracker','Gratitude journal','Calligraphy set'] },
+    ],
+    hampers: [
+      { name: 'Delegate Welcome Kit', price: 499, img: 'corp-1', items: ['Customised notebook','Pen','Thank you card','Tea coaster'] },
+      { name: 'Speaker Appreciation Box', price: 1499, img: 'corp-2', items: ['Coffee mug','Premium notebook','Metallic bookmark','Mysore pak box','Thank you card'] },
+      { name: 'Launch Day Kit', price: 2999, img: 'corp-3', items: ['Customised calendar','Desk clock','Power bank','Leather notebook','Premium pen'], signature: true },
+      { name: 'VIP Leadership Hamper', price: 4999, img: 'corp-4', items: ['Leather wallet','Executive pen set','Mini Tanjore painting','Gourmet coffee','Desk clock'] },
+    ] },
+  { id: 'festive', name: 'Festive, Traditional & Weddings', short: 'Festive & Weddings', cover: 'cover-festive',
+    intro: 'Tamil Nadu sweets, gourmet treats, Diwali decor, heritage crafts and luxury collectibles for the seasons that matter.',
+    collections: [
+      { id: 'tamil-nadu', name: 'Taste of Tamil Nadu', tag: 'Tastes of Tamil Nadu that bring everyone to the table',
+        items: ['Tirunelveli halwa','Karaikudi ghee athirasam','Kumbakonam soan papdi','Thoothukudi macaroons','Mysore pak','Dry jamun','Murukku','Thattai','Banana chips','Palm jaggery','Cow ghee','Cold-pressed oils','Filter coffee','Idli podi','Spice blends','Millet laddu'] },
+      { id: 'gourmet', name: 'Edible & Gourmet', tag: 'Sweet, savoury and unforgettable',
+        items: ['Homemade chocolates','Brownies','Cookies','Dry cakes','Granola','Roasted nuts','Caramelised nuts','Premium mithai','Kaju katli','Assorted sweets','Dates & nut bars','Gourmet namkeen','Artisanal jam','Nut butter','Specialty tea','Saffron'] },
+      { id: 'diwali', name: 'Diwali & Festive Decor', tag: 'Let every corner glow',
+        items: ['Brass diya set','Terracotta diya set','Hand-painted diyas','Floating diya','Tealight holder','Decorative lantern','Urli','Toran','Rangoli stencil','Wooden rangoli','Festive table runner','Festive napkin set','Flower arrangement','Macramé wall hanging','Festive bunting','Decorative tray'] },
+      { id: 'heritage', name: 'Artisan & Heritage Keepsakes', tag: 'Indian craft, each piece with a story to tell',
+        items: ['Terracotta horse','Terracotta figurines','Wooden elephant','Wooden horse','Brass diya','Brass Ganesha','Brass Lakshmi','Brass elephant','Tanjore-style artwork','Mini Tanjore painting','Madhubani artwork','Warli artwork','Kalamkari artwork','Soapstone artefact','Hand-painted tray','Palm-leaf craft'] },
+      { id: 'luxury', name: 'Luxury Collectibles', tag: 'Statement pieces for moments that matter',
+        items: ['Premium brass sculpture','Silver-plated diya','Tanjore artwork','Hand-painted artwork','Artisan vase','Marble artefact','Crystal paperweight','Premium fountain pen','Executive desk clock','Luxury leather accessory','Handwoven silk stole','Premium tea set','Premium coffee set','Artisan serving tray','Jewellery box','Premium fragrance set'] },
+    ],
+    hampers: [
+      { name: 'Mithai Moments', price: 499, img: 'fest-1', items: ['Mysore pak','Kumbakonam soan papdi','Brass diya','Thank you card'] },
+      { name: 'Taste of Tamil Nadu Box', price: 1999, img: 'fest-2', items: ['Tirunelveli halwa','Karaikudi ghee athirasam','Thoothukudi macaroons','Dry jamun','Cotton pouch'], signature: true },
+      { name: 'Diwali Glow Hamper', price: 2999, img: 'fest-3', items: ['Brass diya set','Soy candle','Mysore pak','Decorative lantern','Rangoli stencil'] },
+      { name: 'Heritage Luxe Hamper', price: 4999, img: 'fest-4', items: ['Tanjore-style artwork','Silk stole','Brass diya','Kumbakonam soan papdi','Wooden keepsake box'] },
+    ] },
+  { id: 'wellness', name: 'Wellness, Home & Baby', short: 'Wellness, Home & Baby', cover: 'cover-wellness',
+    intro: 'Natural care, fragrance, soft textiles, maternity and newborn kits, and handmade pieces for the home.',
+    collections: [
+      { id: 'skin', name: 'Skin, Hair & Body Care', tag: 'Care that feels like a quiet ritual',
+        items: ['Baby massage oil','Body massage oil','Face oil','Hair oil','Herbal hair serum','Body butter','Body lotion','Face cleanser','Herbal soap','Luxury soap','Lip balm','Hand cream','Foot cream','Body scrub','Ubtan','Shampoo bar'] },
+      { id: 'fragrance', name: 'Wellness & Fragrance', tag: 'A pause for the senses',
+        items: ['Gratitude journal','Meditation cushion','Eye pillow','Sleep mask','Herbal tea','Aroma candle','Soy candle','Reed diffuser','Room spray','Pillow mist','Linen spray','Incense sticks','Dhoop cones','Bath salts','Foot soak','Herbal heat pack'] },
+      { id: 'textiles', name: 'Textiles & Tactile Gifts', tag: 'Soft to touch, made to be kept',
+        items: ['Muslin face cloth','Muslin towel','Hand towel','Embroidered towel','Handkerchief','Table napkin','Tea towel','Handwoven stole','Cotton stole','Silk stole','Scarf','Potli bag','Travel pouch','Jewellery pouch','Laptop sleeve','Block-print pouch'] },
+      { id: 'maternity', name: 'Maternity & Newborn Kits', tag: 'Gentle beginnings for mothers and little ones',
+        items: ['Sutika Ritual Box','Nest Kit','Heirloom Box','Hospital bag','Labour day checklist card','Muslin swaddle','Muslin burp cloths','Receiving blanket','Cotton onesies','Newborn cap, mitten & socks','Handmade baby soap','Baby massage oil','Stretch mark butter','Milestone cards','Pregnancy journal','Wooden keepsake box'] },
+      { id: 'kitchen', name: 'Kitchen & Home Utility', tag: 'Handmade warmth for every table',
+        items: ['Coconut bowl','Coconut spoon','Wooden spoon set','Wooden chopping board','Serving tray','Brass bowl','Ceramic mug','Coffee mug','Tea cup set','Copper tumbler set','Copper water bottle','Insulated bottle','Coasters','Spice box','Honey dipper','Tea infuser'] },
+    ],
+    hampers: [
+      { name: 'Self-Care Pause', price: 999, img: 'well-1', items: ['Herbal soap','Body butter','Herbal tea','Aroma candle'] },
+      { name: 'Calm Home Hamper', price: 1999, img: 'well-2', items: ['Soy candle','Reed diffuser','Ceramic mug','Herbal tea','Coasters'] },
+      { name: 'New Mom Hamper', price: 2499, img: 'well-3', items: ['Muslin swaddle','Handmade baby soap','Baby massage oil','Stretch mark butter','Pregnancy journal'], signature: true },
+      { name: 'Heirloom Welcome Box', price: 3499, img: 'well-4', items: ['Handmade baby soap','Cotton onesies','Stretch mark butter','Muslin towel','Newborn cap, mitten & socks'] },
+    ] },
+  { id: 'hotels', name: 'Hotels, Spas, Schools & Handmade', short: 'Hotels, Spas & Schools', cover: 'cover-hotel',
+    intro: 'Guest amenities under your own label, eco-conscious gifts, thank-yous for schools and handmade craft pieces.',
+    collections: [
+      { id: 'spa', name: 'Hotel, Resort & Spa Amenities', tag: 'Little luxuries for guests who notice',
+        items: ['Custom-label handmade soaps','Mini shampoo & conditioner','Body lotion minis','Bath salts sachets','Foot soak','Massage oil','Spa welcome kit','Reed diffuser','Linen spray','Pillow mist','Eye mask','Coconut-shell soap tray','Embroidered towels','Cotton slippers','Welcome tea set','VIP arrival hamper'] },
+      { id: 'eco', name: 'Sustainable & Eco-conscious', tag: 'Gifts that tread lightly on the earth',
+        items: ['Seed paper notebook','Seed paper greeting card','Seed paper bookmark','Plantable pencils','Terracotta planter','Seed balls','Herb-growing kit','Bamboo bottle','Bamboo cutlery','Bamboo toothbrush','Coconut-shell bowl','Jute pouch','Jute basket','Palm-leaf basket','Reusable shopping bag','Organic cotton bag'] },
+      { id: 'schools', name: 'Schools & Institutions', tag: 'Thank-yous worth a teacher’s smile',
+        items: ['Thank-you card','Handmade bookmark','Plantable pencils','Seed paper notebook','Premium notebook','Pen set','Coffee mug','Desk planter','Wishlist jar','Customised calendar','Teacher’s gratitude box','Annual-day memento','Staff appreciation hamper','Cotton tote bag','Tea coaster set','Brass diya'] },
+      { id: 'handmade', name: 'Handmade & Craft Corner', tag: 'Small handmade pieces with big heart',
+        items: ['Crochet flowers','Cotton basket','Globe','Book stand','Terracotta horse','Phone holder','Kolam frame','Table top clock','Wooden elephant','Wooden horse','Miniature suitcase gift box','Macramé plant hanger','Macramé wall hanging','Hand-painted tray','Potli bag','Clay tray'] },
+    ],
+    hampers: [
+      { name: 'Teacher’s Gratitude Box', price: 499, img: 'hotel-1', items: ['Handmade bookmark','Thank-you card','Plantable pencils','Seed paper notebook'] },
+      { name: 'Green Gifting Box', price: 1199, img: 'hotel-2', items: ['Bamboo bottle','Jute pouch','Seed balls','Coconut-shell bowl'] },
+      { name: 'Handmade Joy Basket', price: 1299, img: 'hotel-3', items: ['Crochet flowers','Cotton basket','Wishlist jar','Handmade bookmark','Tea coaster'], signature: true },
+      { name: 'Spa Arrival Hamper', price: 1999, img: 'hotel-4', items: ['Custom-label soap','Bath salts','Eye mask','Pillow mist','Welcome tea set'] },
+    ] },
+];
+
+const STEPS = [
+  { t: 'We listen', k: 'Discussing ideas', p: 'Tell us the occasion, the people and the feeling. We begin with the story, not the product.', img: 'listen' },
+  { t: 'We frame it', k: 'Budget & quantity', p: 'Budget, numbers and brand colours are settled together, so nothing surprises you later.', img: 'budget' },
+  { t: 'We weave', k: 'Curating the hamper', p: 'Products are chosen, branded and arranged by hand with an artist’s eye until it feels right.', img: 'curating' },
+  { t: 'We keep time', k: 'Lead time', p: 'Typically 7 to 10 working days from your confirmed order.', img: 'hourglass' },
+  { t: 'We deliver', k: 'Delivery', p: 'Packed with care and sent to your door, or straight to each recipient’s home.', img: 'handover' },
+];
+
+const POSTS = [
+  { id: 'launch-day-kit', kind: 'Our work', read: '3 min', img: 'x/navy-kit', title: 'Inside the Launch Day Kit',
+    dek: 'How we build a launch-day gift that sits on a desk for the whole year, not just the day of the event.',
+    body: `
+      <p>A product launch is one day. A good launch gift should keep the moment alive long after the stage lights go off. That idea shaped our Launch Day Kit, one of the most requested hampers in our corporate catalogue.</p>
+      <dl><dt>The brief</dt><dd>A gift for guests and partners at a launch that feels premium, useful at work and clearly branded without looking like merchandise.</dd>
+      <dt>Inside</dt><dd>Customised calendar, desk clock, power bank, leather notebook and premium pen.</dd>
+      <dt>Starting from</dt><dd>₹2,999 per kit</dd>
+      <dt>Lead time</dt><dd>Typically 7 to 10 working days from confirmed order</dd></dl>
+      <h2>Why these pieces</h2>
+      <p>Every item earns a place on the recipient's desk. The calendar carries the brand through all twelve months. The clock and power bank are used daily. The leather notebook and pen make the box feel personal and considered rather than promotional.</p>
+      <figure><img src="img/p/conference-1.webp" alt="Customised desk calendar" loading="lazy"><img src="img/p/conference-6.webp" alt="Premium pen on a notebook" loading="lazy"></figure>
+      <h2>Branding with manners</h2>
+      <p>The logo appears where it belongs: foil-stamped on the lid, printed on the calendar, debossed on the notebook. It never goes on everything. Ribbon and card are matched to the brand palette so the whole box feels like it was designed for that company alone.</p>
+      <p class="pull">The logo is a signature, not a billboard.</p>
+      <h2>Packed one at a time</h2>
+      <p>Whether the guest list is small or large, every kit is arranged, checked and ribboned by hand. The hundredth box looks exactly like the first.</p>` },
+  { id: 'brief-to-doorstep', kind: 'Process', read: '4 min', img: 'x/curating', title: 'From brief to doorstep in seven to ten working days',
+    dek: 'The five steps every Giftloom order follows, and why we never skip one, even on a large order.',
+    body: `
+      <p>Clients often ask how a bulk order can still feel handmade. The answer is a process we follow every time, with the same care whether we are packing twenty boxes or several hundred.</p>
+      <h2>1. We listen</h2><p>We start with the occasion, the people and the feeling you want them to have. A thank-you for a long-standing client needs something very different from a welcome kit for conference delegates.</p>
+      <h2>2. We frame it</h2><p>Budget, quantity and brand colours are agreed together at the start, so there are no surprises later. This is also when we decide how the branding will appear.</p>
+      <h2>3. We weave</h2><p>We choose the products, brand them and arrange the hamper with an artist's eye. A sample is built and refined until it feels right.</p>
+      <figure class="three"><img src="img/x/listen.webp" alt="A conversation over a brief" loading="lazy"><img src="img/x/curating.webp" alt="Hands curating a hamper" loading="lazy"><img src="img/x/handover.webp" alt="A gift box being handed over" loading="lazy"></figure>
+      <h2>4. We keep time</h2><p>Most orders are ready 7 to 10 working days after confirmation. We plan backwards from your date so nothing is rushed and nothing is late.</p>
+      <h2>5. We deliver</h2><p>Every box is packed with care and sent to your office, or straight to each recipient's home, ready to open.</p>
+      <p class="pull">Never rushed, never late. And never on a production line.</p>` },
+  { id: 'taste-of-tamil-nadu', kind: 'Our work', read: '3 min', img: 'h/fest-2', title: 'A taste of Tamil Nadu, boxed',
+    dek: 'A festive hamper built around regional sweets, each from the town that made it famous.',
+    body: `
+      <p>Festive gifting is often generic: a box of dry fruit, a branded diary. We wanted a hamper that felt rooted and personal, something that tells a story about where it comes from.</p>
+      <dl><dt>Inside</dt><dd>Tirunelveli halwa, Karaikudi ghee athirasam, Thoothukudi macaroons, dry jamun and a cotton pouch.</dd><dt>Starting from</dt><dd>₹1,999 per box</dd></dl>
+      <h2>Every sweet has a hometown</h2>
+      <p>Tirunelveli is known for its halwa, Karaikudi for its ghee athirasam, Thoothukudi for its macaroons. Put together in a wooden box, they turn a festive gift into a small tour of Tamil Nadu.</p>
+      <figure><img src="img/p/tamil-nadu-1.webp" alt="Tirunelveli halwa" loading="lazy"><img src="img/p/tamil-nadu-4.webp" alt="Thoothukudi macaroons" loading="lazy"></figure>
+      <h2>Made for sharing</h2>
+      <p>These are sweets people open at home and share with family, which is exactly where a festive gift should end up. A personal card from the sender goes on top.</p>` },
+  { id: 'branding-with-manners', kind: 'Craft', read: '3 min', img: 'x/brand-tray', title: 'Branding with manners',
+    dek: 'Six quiet ways to put your brand on a gift without turning it into merchandise.',
+    body: `
+      <p>The fastest way to make a premium gift feel cheap is to print a logo on every item. People keep gifts that feel personal. So we treat branding the way a good tailor treats a monogram: present, precise and discreet.</p>
+      <h2>Where your brand can live</h2>
+      <ul><li><b>Your mark in gold.</b> Foil-stamped on the lid, quietly premium.</li><li><b>Ribbon in your colours.</b> Woven to match your brand palette.</li><li><b>A card with a name.</b> A message from you, addressed to each recipient.</li><li><b>Subtle on keepsakes.</b> Your logo on select items, never on everything.</li><li><b>A box in your hues.</b> Kraft, rigid or wooden, finished to match.</li><li><b>Doorstep delivery.</b> Gift-ready, sent straight to each recipient.</li></ul>
+      <figure><img src="img/x/navy-boxes.webp" alt="Kraft boxes with navy ribbon" loading="lazy"><img src="img/x/purple-ribbon.webp" alt="Wooden box with purple ribbon" loading="lazy"></figure>
+      <p class="pull">A gift should not end when the box is opened.</p>
+      <p>Done well, branding makes recipients remember who thought of them, and want to keep what's inside.</p>` },
+  { id: 'gifts-that-tread-lightly', kind: 'Craft', read: '2 min', img: 'h/hotel-2', title: 'Gifts that tread lightly',
+    dek: 'Seed paper, bamboo, jute and coconut shell: our eco-conscious collection for brands that care about what they leave behind.',
+    body: `
+      <p>More of our clients want gifts that reflect their sustainability goals. Our eco-conscious collection uses natural, reusable and plantable materials, without giving up on design.</p>
+      <dl><dt>Green Gifting Box</dt><dd>Bamboo bottle, jute pouch, seed balls and coconut-shell bowl, starting from ₹1,199.</dd></dl>
+      <figure class="three"><img src="img/p/eco-1.webp" alt="Seed paper notebook" loading="lazy"><img src="img/p/eco-4.webp" alt="Plantable pencils" loading="lazy"><img src="img/p/eco-8.webp" alt="Bamboo bottle" loading="lazy"></figure>
+      <h2>Plantable, reusable, natural</h2>
+      <p>Seed paper notebooks and cards grow into plants once they are used. Bamboo, jute and palm-leaf pieces replace plastic. Coconut-shell bowls are made from what would otherwise be waste. Each piece can still carry your brand.</p>` },
+  { id: 'spa-arrival', kind: 'Our work', read: '2 min', img: 'h/hotel-4', title: 'Little luxuries for guests who notice',
+    dek: 'Custom-label amenities and arrival hampers that turn a hotel stay into a memory.',
+    body: `
+      <p>For hotels, resorts and spas, the details in a room are part of the brand. Our amenities carry your label, not ours, and are chosen to feel calm and natural.</p>
+      <dl><dt>Spa Arrival Hamper</dt><dd>Custom-label soap, bath salts, eye mask, pillow mist and a welcome tea set, starting from ₹1,999.</dd></dl>
+      <figure><img src="img/p/spa-1.webp" alt="Custom-label handmade soaps" loading="lazy"><img src="img/p/spa-7.webp" alt="Spa welcome kit" loading="lazy"></figure>
+      <p>From handmade soaps on a coconut-shell tray to embroidered towels and cotton slippers, every piece is made to be noticed by guests who notice.</p>` },
+];
+
+const $ = (s, el = document) => el.querySelector(s);
+const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+const inr = n => '₹' + n.toLocaleString('en-IN');
+
+function hamperHTML(h, showCat) {
+  return `<article class="hamper"><div class="ph"><img src="img/h/${h.img}.webp" alt="${esc(h.name)}" loading="lazy"></div>
+    <div class="hamper-copy">${showCat ? `<span class="tag">${esc(showCat)}</span>` : ''}<h3>${esc(h.name)}</h3>
+    <div><span class="from">Starting from</span> <span class="price">${inr(h.price)}</span></div>
+    <ul>${h.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul></div></article>`;
+}
+function postCard(p, feature) {
+  return `<a class="post-card${feature ? ' feature' : ''}" href="#journal-${p.id}" data-kind="${p.kind}"><div class="ph"><img src="img/${p.img}.webp" alt="" loading="lazy"></div>
+    <div class="txt"><span class="kind">${p.kind}<span>${p.read} read</span></span><h3>${esc(p.title)}</h3><p>${esc(p.dek)}</p></div></a>`;
+}
+
+// home
+$('#home-cats').innerHTML = CATALOGUES.map(c => `<a class="cat-card" href="#collections-${c.id}">
+  <div class="ph"><img src="img/x/${c.cover}.webp" alt="" loading="lazy"></div>
+  <span class="meta">${c.collections.length} collections · from ${inr(Math.min(...c.hampers.map(h => h.price)))}</span>
+  <h3>${esc(c.name)}</h3><p>${esc(c.intro)}</p></a>`).join('');
+$('#steps').innerHTML = STEPS.map((s, i) => `<div class="step"><div class="ph"><img src="img/x/${s.img}.webp" alt="" loading="lazy"></div>
+  <span class="n">${i + 1}</span><h3>${s.t}</h3><small>${s.k}</small><p>${s.p}</p></div>`).join('');
+$('#home-hampers').innerHTML = CATALOGUES.map(c => hamperHTML(c.hampers.find(h => h.signature), c.short)).join('');
+$('#home-posts').innerHTML = POSTS.slice(0, 3).map(p => postCard(p)).join('');
+$('#foot-cats').innerHTML = CATALOGUES.map(c => `<li><a href="#collections-${c.id}">${esc(c.short)}</a></li>`).join('');
+
+// hampers page
+$('#all-hampers').innerHTML = CATALOGUES.map(c => `<section class="collection" style="border-top:1px solid var(--line)">
+  <div class="collection-head"><h3>${esc(c.name)}</h3><a class="link" href="#collections-${c.id}">Browse this catalogue</a></div>
+  <div class="hampers">${c.hampers.map(h => hamperHTML(h)).join('')}</div></section>`).join('');
+
+// collections page
+$('#cat-tabs').innerHTML = CATALOGUES.map(c => `<button role="tab" id="tab-${c.id}" data-cat="${c.id}" aria-selected="false">${esc(c.short)}</button>`).join('');
+function renderCatalogue(id) {
+  const c = CATALOGUES.find(x => x.id === id) || CATALOGUES[0];
+  document.querySelectorAll('#cat-tabs button').forEach(b => b.setAttribute('aria-selected', b.dataset.cat === c.id));
+  $('#cat-panel').innerHTML = `
+    <div class="band tight cat-intro"><img src="img/x/${c.cover}.webp" alt="">
+      <div class="copy"><p class="eyebrow">Catalogue ${CATALOGUES.indexOf(c) + 1} of 4</p><h2>${esc(c.name)}</h2><p class="lede">${esc(c.intro)}</p>
+      <ul class="toc">${c.collections.map(k => `<li><a href="#collections-${c.id}" data-jump="${k.id}">${esc(k.name)}<span>${k.items.length} pieces</span></a></li>`).join('')}
+      <li><a href="#collections-${c.id}" data-jump="hampers-${c.id}">Sample hampers<span>from ${inr(c.hampers[0].price)}</span></a></li></ul></div></div>
+    ${c.collections.map(k => `<section class="collection" id="col-${k.id}">
+      <div class="collection-head"><h3>${esc(k.name)}</h3><span class="italic">${esc(k.tag)}</span></div>
+      <ul class="products">${k.items.slice(0, 8).map((it, i) => `<li><div class="ph"><img src="img/p/${k.id}-${i + 1}.webp" alt="${esc(it)}" loading="lazy"></div><span>${esc(it)}</span></li>`).join('')}</ul>
+      <div class="also"><b>Also in this collection</b>${k.items.slice(8).map(it => `<span>${esc(it)}</span>`).join('')}</div>
+    </section>`).join('')}
+    <section class="collection" id="col-hampers-${c.id}">
+      <div class="collection-head"><h3>Sample hampers</h3><span class="custom-note">Every item can be customised with your brand, colours and message.</span></div>
+      <div class="hampers">${c.hampers.map(h => hamperHTML(h)).join('')}</div>
+    </section>
+    <div class="band tight" style="display:flex;flex-wrap:wrap;gap:16px 28px;align-items:center;justify-content:space-between;border-top:1px solid var(--line)">
+      <p class="italic" style="font-size:var(--t-xl);color:var(--green)">Ask us for the full ${esc(c.short)} catalogue.</p><a class="btn" href="#contact">Request the catalogue</a></div>`;
+}
+$('#cat-tabs').addEventListener('click', e => { const b = e.target.closest('button'); if (b) location.hash = 'collections-' + b.dataset.cat; });
+$('#cat-panel').addEventListener('click', e => {
+  const a = e.target.closest('[data-jump]'); if (!a) return;
+  e.preventDefault(); document.getElementById('col-' + a.dataset.jump)?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+});
+
+// journal
+const KINDS = ['All', ...new Set(POSTS.map(p => p.kind))];
+let kind = 'All';
+function renderJournal() {
+  $('#filters').innerHTML = KINDS.map(k => `<button class="chip" type="button" aria-pressed="${k === kind}" data-k="${k}">${k}</button>`).join('');
+  const list = POSTS.filter(p => kind === 'All' || p.kind === kind);
+  $('#all-posts').innerHTML = list.map((p, i) => postCard(p, i === 0)).join('');
+}
+$('#filters').addEventListener('click', e => { const b = e.target.closest('button'); if (b) { kind = b.dataset.k; renderJournal(); } });
+renderJournal();
+function renderArticle(id) {
+  const p = POSTS.find(x => x.id === id); if (!p) return false;
+  const i = POSTS.indexOf(p), next = POSTS[(i + 1) % POSTS.length];
+  $('#article').innerHTML = `<div class="article-hero"><p class="eyebrow">${p.kind} · ${p.read} read</p><h1>${esc(p.title)}</h1><p class="lede">${esc(p.dek)}</p></div>
+    <div class="article-cover"><img src="img/${p.img}.webp" alt=""></div>
+    <div class="prose">${p.body}</div>
+    <div class="article-foot"><a class="link" href="#journal">All stories</a><a class="link" href="#journal-${next.id}">Next: ${esc(next.title)}</a></div>
+    <div class="band tight"><div class="cta"><h2 style="font-size:var(--t-2xl)">Planning something similar?</h2><a class="btn" href="#contact">Plan a gift</a></div></div>`;
+  return true;
+}
+
+// router
+const VIEWS = ['home', 'collections', 'hampers', 'design', 'founder', 'journal', 'contact'];
+function route() {
+  const h = location.hash.slice(1) || 'home';
+  let view = 'home';
+  if (h.startsWith('collections')) { view = 'collections'; renderCatalogue(h.split('collections-')[1] || 'corporate'); }
+  else if (h.startsWith('journal-') && renderArticle(h.slice(8))) view = 'article';
+  else if (VIEWS.includes(h)) view = h;
+  document.querySelectorAll('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + view));
+  const navKey = view === 'article' ? 'journal' : view;
+  document.querySelectorAll('[data-nav]').forEach(a => a.dataset.nav === navKey ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'));
+  if (view === 'design' && window.Studio) Studio.render();
+  $('#nav').classList.remove('open'); $('#menu-btn').setAttribute('aria-expanded', 'false');
+  window.scrollTo(0, 0);
+  document.title = view === 'home' ? 'Giftloom Studio' : `${view === 'article' ? 'Journal' : view[0].toUpperCase() + view.slice(1)} · Giftloom Studio`;
+}
+addEventListener('hashchange', route);
+route();
+
+$('#menu-btn').addEventListener('click', () => {
+  const open = $('#nav').classList.toggle('open'); $('#menu-btn').setAttribute('aria-expanded', open);
+});
+
+// copy helpers
+async function copyText(text, btn) {
+  const label = btn.textContent;
+  try { await navigator.clipboard.writeText(text); btn.textContent = 'Copied'; }
+  catch { const r = document.createRange(); const t = btn.previousElementSibling || btn; r.selectNodeContents(t); const s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Selected'; }
+  setTimeout(() => btn.textContent = label, 1800);
+}
+document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', () => copyText(b.dataset.copy, b)));
+
+// enquiry
+$('#enquiry').addEventListener('submit', e => {
+  e.preventDefault();
+  const f = e.target, name = f.name.value.trim();
+  if (!name) { f.name.focus(); f.name.setAttribute('aria-invalid', 'true'); f.name.placeholder = 'Please add your name'; return; }
+  f.name.removeAttribute('aria-invalid');
+  const lines = [`Hello Giftloom Studio, I'd like to plan a gift.`, ``, `Name: ${name}`];
+  if (f.company.value.trim()) lines.push(`Company: ${f.company.value.trim()}`);
+  lines.push(`Occasion: ${f.occasion.value}`);
+  if (f.qty.value.trim()) lines.push(`Number of gifts: ${f.qty.value.trim()}`);
+  lines.push(`Budget per gift: ${f.budget.value}`);
+  if (f.date.value) lines.push(`Needed by: ${new Date(f.date.value + 'T00:00').toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}`);
+  if (f.msg.value.trim()) lines.push(``, f.msg.value.trim());
+  const text = lines.join('\n');
+  $('#form-text').textContent = text;
+  $('#wa-link').href = 'https://wa.me/918438468217?text=' + encodeURIComponent(text);
+  $('#form-result').hidden = false;
+  $('#form-result').scrollIntoView({ block: 'nearest' });
+});
+$('#copy-enquiry').addEventListener('click', e => copyText($('#form-text').textContent, e.currentTarget));
+$('#year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
